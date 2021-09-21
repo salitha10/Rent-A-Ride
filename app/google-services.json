@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "145711781815",
+    "project_id": "astra-ride",
+    "storage_bucket": "astra-ride.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145711781815:android:9fa09e652ae1566f4bfa32",
+        "android_client_info": {
+          "package_name": "com.example.astraride"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145711781815-5e8e8uqfi23g9a75p1t1oad7ugddaruj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDOoXzrIP2Li9fu6eZO6kxOUmXDU-sHIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145711781815-5e8e8uqfi23g9a75p1t1oad7ugddaruj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
