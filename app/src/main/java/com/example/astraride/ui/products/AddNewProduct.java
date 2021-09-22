@@ -87,24 +87,21 @@ public class AddNewProduct extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sliderView = getView().findViewById(R.id.imageSlider);
 
-        int[] images = {
-                R.drawable.city_girl_rafiki,
-                R.drawable.ic_menu_camera,
-                R.drawable.city_girl_rafiki,
-                R.drawable.ic_menu_camera};
-        SliderAdapter sliderAdapter = new SliderAdapter(images);
+//        sliderView = getView().findViewById(R.id.imageSlider);
+//
+//        int[] images = {
+//                R.drawable.city_girl_rafiki,
+//                R.drawable.ic_menu_camera,
+//                R.drawable.city_girl_rafiki,
+//                R.drawable.ic_menu_camera};
+//        SliderAdapter sliderAdapter = new SliderAdapter(images);
+//
+//        sliderView.setSliderAdapter(sliderAdapter);
+//        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
+//        sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
+//        sliderView.startAutoCycle();
 
-        sliderView.setSliderAdapter(sliderAdapter);
-        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
-        sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
-        sliderView.startAutoCycle();
-        sliderView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Hello", Toast.LENGTH_SHORT).show();
-            }
-        });
+
     }
 }

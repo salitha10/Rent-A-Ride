@@ -196,6 +196,7 @@ public class EditProfile extends AppCompatActivity {
                                             }
                                         });
                                     } else {
+                                        user.setUserImage("");
                                         dbf.setValue(user);
                                         pd.cancel();
                                         reverseEdit();

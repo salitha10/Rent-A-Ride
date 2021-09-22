@@ -36,4 +36,14 @@
     <string name="Signout">Sign out</string>
     <string name="menu_add_product">Add New</string>
     <string name="get_offer">Get Offer</string>
+    <string name="Title">title</string>
+    <string name="ItemTitle">Title</string>
+    <string name="Brand">Brand</string>
+    <string name="Location">Location</string>
+    <string name="Category">Category</string>
+    <string name="PCapavity">Passenger Capacity</string>
+    <string name="Color">Body Color</string>
+    <string name="Details">Other details</string>
+    <string name="Price">Price per hour</string>
+    <string name="RentalFee">Rental fee</string>
 </resources>

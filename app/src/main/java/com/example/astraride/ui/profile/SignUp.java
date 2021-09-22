@@ -44,7 +44,7 @@ public class SignUp extends AppCompatActivity {
         name = findViewById(R.id.editTextTextName);
         email = findViewById(R.id.editTextTextEmail);
         phoneNo = findViewById(R.id.editTextTextPhone);
-        address = findViewById(R.id.editTextTextAddress);
+        address = findViewById(R.id.editTextTextLocation);
         password = findViewById(R.id.editTextPassword);
         confirm_password = findViewById(R.id.editTextConfirmPassword);
         btnSignUp = findViewById(R.id.btn_signup);
