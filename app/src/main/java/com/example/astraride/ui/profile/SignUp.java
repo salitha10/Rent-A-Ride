@@ -119,7 +119,7 @@ public class SignUp extends AppCompatActivity {
 
                                         user.setUserId(currentUser.getUid());
                                         Log.d("id", currentUser.getUid());
-                                        user.setUserImage("");
+                                        user.setUserImage("https://firebasestorage.googleapis.com/v0/b/astra-ride.appspot.com/o/blank-profile-picture-973460_640.png?alt=media&token=693087a2-f9e9-46d9-885c-a0e33608c8cc");
                                         user.setName(name.getText().toString().trim());
                                         user.setEmail(email.getText().toString().trim());
                                         user.setPhoneNo(phoneNo.getText().toString().trim());

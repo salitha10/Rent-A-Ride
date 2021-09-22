@@ -33,4 +33,7 @@
     <string name="Phone">Phone No</string>
     <string name="UploadImage">Upload Image</string>
     <string name="delete_account">Delete Account</string>
+    <string name="Signout">Sign out</string>
+    <string name="menu_add_product">Add New</string>
+    <string name="get_offer">Get Offer</string>
 </resources>

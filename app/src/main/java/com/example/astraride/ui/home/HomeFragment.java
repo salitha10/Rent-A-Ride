@@ -67,8 +67,8 @@ public class HomeFragment extends Fragment {
     public void sendMessage(){
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-        myRef.setValue("Hello, World!");
+//        DatabaseReference myRef = database.getReference("message");
+//        myRef.setValue("Hello, World!");
     }
 }
 

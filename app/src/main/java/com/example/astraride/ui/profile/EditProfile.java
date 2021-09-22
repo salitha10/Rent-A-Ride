@@ -78,9 +78,9 @@ public class EditProfile extends AppCompatActivity {
         pd.show();
 
         //Get userID from intent
-//        Intent intent = getIntent();
-//        String id = intent.getExtras().getString("userID");
-        String id = "Qv33H6pzzYVGmuV2y8Lk00q8q073";
+        Intent intent = getIntent();
+        String id = intent.getExtras().getString("userID");
+
 
         dbf = FirebaseDatabase.getInstance().getReference("Users").child(id);
         Log.d("profileID", id);
@@ -105,7 +105,7 @@ public class EditProfile extends AppCompatActivity {
                     Glide.with(EditProfile.this).load(user.getUserImage()).circleCrop().into(dp);
 
                     user.setPassword(snapshot.child("password").getValue().toString());
-//                    user.setUserType(snapshot.child("userType").getValue().toString());
+                    user.setUserType(snapshot.child("userType").getValue().toString());
 
                     //Disable editing
                     name.setFocusable(false);

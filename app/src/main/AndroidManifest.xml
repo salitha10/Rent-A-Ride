@@ -36,4 +36,9 @@
             android:theme="@style/Theme.AstraRide.NoActionBar" />
     </application>
 
+
+    //Permission
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 </manifest>
