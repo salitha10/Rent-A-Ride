@@ -3,18 +3,28 @@ package com.example.astraride;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.astraride.models.User;
 import com.example.astraride.ui.profile.EditProfile;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,6 +36,8 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    DatabaseReference dbf;
+    String name = "name", email = "email", imgUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,20 +65,37 @@ public class MainActivity extends AppCompatActivity {
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
+        dbf = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
 
         //Set navigation headers
         View headerView = navigationView.getHeaderView(0);
         ImageView drawerImage = (ImageView) headerView.findViewById(R.id.profile_image);
         TextView drawerUsername = (TextView) headerView.findViewById(R.id.profile_name);
         TextView drawerAccount = (TextView) headerView.findViewById(R.id.profile_email);
-//        drawerImage.postDelayed(new Runnable(){
-//            public void run() {
-//                drawerImage.setImageURI(Uri.parse("https://firebasestorage.googleapis.com/v0/b/astra-ride.appspot.com/o/blank-profile-picture-973460_640.png?alt=media&token=693087a2-f9e9-46d9-885c-a0e33608c8cc"));
-//            }
-//          }, 1000);
 
-        drawerUsername.setText("User");
-        drawerAccount.setText(user.getEmail());
+        //Get data from database
+        dbf.addListenerForSingleValueEvent(new ValueEventListener(){
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()){
+                    //Display data
+                    name = snapshot.child("name").getValue().toString();
+                    email = snapshot.child("email").getValue().toString();
+                    imgUri = snapshot.child("userImage").getValue().toString();
+
+                    //Set values
+                    Glide.with(MainActivity.this).load(imgUri).circleCrop().into(drawerImage);
+                    drawerUsername.setText(name);
+                    drawerAccount.setText(email);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("DBError", error.getMessage());
+            }
+        });
+
 
         drawerUsername.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
 
     @Override

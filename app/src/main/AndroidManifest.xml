@@ -11,14 +11,16 @@
         android:theme="@style/Theme.AstraRide">
         <activity android:name=".ui.profile.EditProfile">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
 
         </activity>
 
         <activity android:name=".ui.profile.Login">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
 
         </activity>
