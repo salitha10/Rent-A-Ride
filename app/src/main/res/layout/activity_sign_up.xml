@@ -13,6 +13,16 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="clip_horizontal|center"
+        android:layout_marginBottom="10dp"
+        android:text="Sign Up"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <ScrollView
         android:id="@+id/signup_scroll"
         android:layout_width="match_parent"
@@ -24,16 +34,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
-
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="clip_horizontal|center"
-                android:layout_marginBottom="10dp"
-                android:text="Sign Up"
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/editTextTextName"
@@ -66,7 +66,7 @@
                 android:paddingBottom="20dp" />/>
 
             <EditText
-                android:id="@+id/editTextTextAddress"
+                android:id="@+id/editTextTextLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -93,7 +93,7 @@
                 android:hint="@string/ConfirmPassword"
                 android:inputType="textPassword"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp" />/>
+                android:paddingBottom="20dp" />
 
             <Button
                 android:id="@+id/btn_signup"

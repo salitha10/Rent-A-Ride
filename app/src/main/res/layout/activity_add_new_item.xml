@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.products.AddNewItem">
+
+<!--    <com.smarteist.autoimageslider.SliderView-->
+<!--        android:id="@+id/slider"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        app:sliderAnimationDuration="600"-->
+<!--        app:sliderAutoCycleDirection="back_and_forth"-->
+<!--        app:sliderAutoCycleEnabled="true"-->
+<!--        app:sliderIndicatorAnimationDuration="600"-->
+<!--        app:sliderIndicatorGravity="center_horizontal|bottom"-->
+<!--        app:sliderIndicatorMargin="15dp"-->
+<!--        app:sliderIndicatorOrientation="horizontal"-->
+<!--        app:sliderIndicatorPadding="3dp"-->
+<!--        app:sliderIndicatorRadius="2dp"-->
+<!--        app:sliderIndicatorSelectedColor="#5A5A5A"-->
+<!--        app:sliderIndicatorUnselectedColor="#FFF"-->
+<!--        app:sliderScrollTimeInSec="1"-->
+<!--        app:sliderStartAutoCycle="true" />-->
+
+    <ImageView
+        android:id="@+id/Item_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:clickable="true"
+        android:onClick="captureImage"
+        app:srcCompat="@drawable/ic_menu_camera"></ImageView>
+
+    <ScrollView
+        android:id="@+id/signup_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/editTextTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/ItemTitle"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+            <EditText
+                android:id="@+id/editTextBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Brand"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+            <EditText
+                android:id="@+id/editTextCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Category"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />/>
+
+            <EditText
+                android:id="@+id/editTextCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/PCapavity"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"/>
+
+            <EditText
+                android:id="@+id/editTextBodyColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Color"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"/>
+
+            <EditText
+                android:id="@+id/editTextTextLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Location"
+                android:inputType="textPostalAddress"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+
+            <EditText
+                android:id="@+id/editTextFee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:hint="@string/RentalFee"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"/>
+
+            <EditText
+                android:id="@+id/editTextDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Details"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="Save"
+                android:text="Save"></Button>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
