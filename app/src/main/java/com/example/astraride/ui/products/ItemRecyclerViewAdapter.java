@@ -38,6 +38,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
 //        final ArrayList myListData = listdata[position];
 //        holder.itemImage.setImageURI(Uri.parse(itemList.get(position).getItemImage()));
         holder.itemtxt.setText("Hello");

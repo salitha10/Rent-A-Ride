@@ -12,19 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AstraRide">
-        <activity android:name=".ui.products.ViewItem"></activity>
-        <activity android:name=".ui.products.AddNewItem">
-
-        </activity>
-        <activity android:name=".ui.profile.EditProfile" />
-        <activity android:name=".ui.profile.Login">
-
+        <activity android:name=".ui.reviews.AddReview"></activity>
+        <activity android:name=".ui.payment.Checkout"></activity>
+        <activity android:name=".ui.reviews.AllReviews" />
+        <activity android:name=".ui.products.ViewItem">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".ui.products.AddNewItem" />
+        <activity android:name=".ui.profile.EditProfile" />
+        <activity android:name=".ui.profile.Login" />
         <activity android:name=".ui.profile.SignUp" />
         <activity
             android:name=".MainActivity"
