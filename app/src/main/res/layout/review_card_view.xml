@@ -8,8 +8,8 @@
     android:layout_margin="2dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="8dp"
-    app:cardElevation="8dp"
-    app:cardMaxElevation="10dp"
+    app:cardElevation="2dp"
+    app:cardMaxElevation="5dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
 
@@ -30,7 +30,7 @@
             android:contentDescription="@string/app_name"
             android:padding="5dp"
             android:src="@drawable/common_google_signin_btn_icon_dark_normal"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal" />
+            app:srcCompat="@drawable/ic_launcher_foreground" />
 
 
     <LinearLayout
@@ -42,7 +42,7 @@
             android:id="@+id/idTVName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/idIVImage"
             android:text="@string/Name"
@@ -50,20 +50,34 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/idTVRating"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/idTVName"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="41dp"
-            android:layout_toEndOf="@id/idIVImage"
-            android:drawablePadding="2dp"
-            android:text="@string/rating"
-            android:transformPivotX="0dp"
-            android:transformPivotY="0dp"/>
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+
+            <TextView
+                android:id="@+id/star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/idTVName"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/idIVImage"
+                android:drawableEnd="@android:drawable/btn_star_big_on"
+                android:gravity="center"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/idTVRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Rating" />
+
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/idTVComment"
@@ -76,9 +90,10 @@
             android:layout_marginEnd="41dp"
             android:layout_toEndOf="@id/idIVImage"
             android:drawablePadding="2dp"
-            android:text="@string/rating"
+            android:text="Comment"
+            android:textSize="14sp"
             android:transformPivotX="0dp"
-            android:transformPivotY="0dp"/>
+            android:transformPivotY="0dp" />
 
 
     </LinearLayout>

@@ -17,33 +17,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <ImageView
                 android:id="@+id/imageViewItem"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                app:srcCompat="@drawable/placeholder" />
+                app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="2dp"
                 android:background="?android:attr/listDivider" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
 
                 <TextView
                     android:id="@+id/ItemViewTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
+                    android:layout_marginTop="10dp"
                     android:text="@string/ItemTitle"
+
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -52,9 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Location"
+                    android:layout_marginTop="5dp"
                     android:textSize="18sp" />
-
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/ItemViewPrice"
@@ -62,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Price"
                 android:textColor="#4CAF50"
+                android:layout_marginTop="5dp"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -69,7 +67,9 @@
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_marginTop="2dp"
+                android:background="?android:attr/listDivider"
+                android:padding="5dp" />
 
             <TextView
                 android:id="@+id/ItemViewSpecs"
@@ -77,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/Specs"
+                android:layout_marginTop="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -194,6 +195,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/Details"
+                android:layout_marginTop="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -232,6 +234,7 @@
             android:id="@+id/btnPay"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#4CAF50"
             android:text="@string/Rent" />
 
     </RelativeLayout>

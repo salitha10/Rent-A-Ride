@@ -25,11 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Inventory#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class Inventory extends Fragment {
 
     DatabaseReference dbf;

@@ -28,6 +28,7 @@ public class AllReviews extends AppCompatActivity {
     FloatingActionButton btn;
     DatabaseReference dbf, dbfu;
     RecyclerView rec;
+    String itemID;
     ArrayList<Review> rvList;
     ArrayList<User> userList;
     User user;
@@ -38,9 +39,14 @@ public class AllReviews extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_reviews);
 
+        //Ge data from intent
+        Intent i = getIntent();
+        itemID = i.getStringExtra("ItemID");
+        Log.d("IItm", itemID);
+
         rvList = new ArrayList<Review>();
 
-        dbf = FirebaseDatabase.getInstance().getReference().child("Reviews");
+        dbf = FirebaseDatabase.getInstance().getReference().child("Reviews").child(itemID);
         rec = findViewById(R.id.allReviewsRecycle);
 
         //Add to recycleview
@@ -85,8 +91,8 @@ public class AllReviews extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(AllReviews.this, AddReview.class);
+                intent.putExtra("itemId",itemID);
                 startActivity(intent);
-
             }
         });
     }

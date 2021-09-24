@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment {
 
                     HomeViewAdapter adapter = new HomeViewAdapter(itemList);
                     recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 }
             }

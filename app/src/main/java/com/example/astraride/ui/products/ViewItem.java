@@ -62,6 +62,7 @@ public class ViewItem extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ViewItem.this, AllReviews.class);
+                intent.putExtra("ItemID",itemId);
                 startActivity(intent);
             }
         });

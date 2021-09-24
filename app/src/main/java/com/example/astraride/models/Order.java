@@ -1,6 +1,8 @@
 package com.example.astraride.models;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
 
     private String orderId;
     private String name;
@@ -12,7 +14,16 @@ public class Order {
     private String orderDate;
     private String pickupDate;
     private String returnDate;
+    private String cost;
 
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
 
     public String getPickupDate() {
         return pickupDate;

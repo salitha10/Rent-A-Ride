@@ -36,7 +36,7 @@ public class AddReview extends AppCompatActivity {
     DatabaseReference dbf;
     String currentUser;
     Button done, cancel;
-    String itemID, reviewID; //intent
+    String ItemID, reviewID; //intent
     Review review;
 
 
@@ -50,21 +50,20 @@ public class AddReview extends AppCompatActivity {
 
         //Get values from intent
         Intent intent = getIntent();
-//        itemID = intent.getStringExtra("itemID");
-          itemID = "16323265505469v3FumdrqTamRAaMIP9iypetHFq1";
+        ItemID = intent.getStringExtra("itemId");
+        Log.d("itemId", ItemID);
 
-//        reviewID = intent.getStringExtra("reviewID");
 
         //Initialize components
         comments = (EditText) findViewById(R.id.editTextProductComments);
         rating = (RatingBar) findViewById(R.id.ratingBar);
-        thumbnail = (ImageView) findViewById(R.id.productThumbnail);
-        item = (TextView) findViewById(R.id.txtproduct);
+        thumbnail = (ImageView) findViewById(R.id.orderImage);
+        item = (TextView) findViewById(R.id.orderName);
         done = (Button) findViewById(R.id.button);
         cancel = (Button) findViewById(R.id.button2);
 
         //Load data from database
-        dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(itemID);
+        dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(ItemID);
         dbf.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -97,7 +96,7 @@ public class AddReview extends AppCompatActivity {
         //Save vales in model
         review.setRating(rating.getRating());
         review.setComments(comments.getText().toString());
-        review.setItemId(itemID);
+        review.setItemId(ItemID);
         review.setReviewerId(currentUser);
 
         //Save to db
@@ -105,7 +104,7 @@ public class AddReview extends AppCompatActivity {
             dbf = FirebaseDatabase.getInstance().getReference().child("Reviews");
             String id = dbf.push().getKey(); //Get key from database
             review.setReviewID(id);
-            dbf.child(id).setValue(review); //send model to database
+            dbf.child(ItemID).child(id).setValue(review); //send model to database
             Toast.makeText(getApplicationContext(), "Review Added", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AddReview.this, AllReviews.class);
             startActivity(intent);

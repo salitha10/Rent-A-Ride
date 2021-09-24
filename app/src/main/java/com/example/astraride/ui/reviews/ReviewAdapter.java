@@ -17,6 +17,8 @@ import com.example.astraride.R;
 import com.example.astraride.models.Review;
 import com.example.astraride.models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,13 +55,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Viewholder
     public void onBindViewHolder(@NonNull ReviewAdapter.Viewholder holder, int position) {
         // to set data to textview and imageview of each card layout
 
-        curretUser = "9v3FumdrqTamRAaMIP9iypetHFq1";
+        curretUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Review rev = reviewModelArrayList.get(position);
         holder.reviewRatingTV.setText("" + rev.getRating());
         holder.reviewCommentTV.setText(rev.getComments());
         //Get user data
-        dbfu = FirebaseDatabase.getInstance().getReference().child("Users").child(reviewModelArrayList.get(position).getReviewerId());
+        dbfu = FirebaseDatabase.getInstance().getReference().child("Users").child(rev.getReviewerId());
+
         dbfu.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -87,7 +90,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Viewholder
                             }
                         }
                     });
-
                 }
             }
 
@@ -96,8 +98,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Viewholder
                 Log.e("DBError", error.getMessage());
             }
         });
-
-
     }
 
 

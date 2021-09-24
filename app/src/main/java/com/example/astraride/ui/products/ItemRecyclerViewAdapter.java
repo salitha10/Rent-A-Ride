@@ -83,7 +83,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
             itemLocation = itemView.findViewById(R.id.location);
             itemPrice = itemView.findViewById(R.id.price);
             itemName = itemView.findViewById(R.id.title);
-            cardView = itemView.findViewById(R.id.itemCard);
+            cardView = itemView.findViewById(R.id.ItemCard);
         }
     }
 }

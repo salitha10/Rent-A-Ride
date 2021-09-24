@@ -87,8 +87,8 @@ public class AddNewItem extends AppCompatActivity {
         location = findViewById(R.id.editTextTextLocation);
         fee = findViewById(R.id.editTextFee);
         details = findViewById(R.id.editTextDetails);
-//        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        currentUser = "9v3FumdrqTamRAaMIP9iypetHFq1";
+        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
 
     }
@@ -126,7 +126,9 @@ public class AddNewItem extends AppCompatActivity {
         String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
         String time = Long.toString(System.currentTimeMillis());
         item = new Item();
-        String id = time + currentUser;
+
+        dbf = FirebaseDatabase.getInstance().getReference().child("Items");
+        String id = dbf.push().getKey();
 
         //Get data
         item.setTitle(title.getText().toString().trim());
@@ -143,8 +145,7 @@ public class AddNewItem extends AppCompatActivity {
 
 
         //Save to database
-        dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(id);
-        Intent intent = new Intent(this, AddNewItem.class);
+        Intent intent = new Intent(this, Inventory.class);
 
         if (imageUri != null) {
             StorageReference stref = FirebaseStorage.getInstance().getReference().child("Item_images")
@@ -161,7 +162,7 @@ public class AddNewItem extends AppCompatActivity {
                             Log.d("Image", url);
 
                             //Save all data in database
-                            dbf.setValue(item);
+                            dbf.child(id).setValue(item);
                             pd.cancel();
                             Toast.makeText(AddNewItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
@@ -171,7 +172,7 @@ public class AddNewItem extends AppCompatActivity {
             });
         } else {
             item.setItemImage("");
-            dbf.setValue(item);
+            dbf.child(id).setValue(item);
             pd.cancel();
             Toast.makeText(AddNewItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
             startActivity(intent);

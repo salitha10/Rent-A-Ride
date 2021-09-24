@@ -118,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#E91E63"
-                    android:onClick="Save"
+                    android:onClick="delete"
                     android:text="@string/Delete"></Button>
 
                 <Button

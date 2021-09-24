@@ -62,8 +62,8 @@ public class EditReview extends AppCompatActivity {
         //Initialize components
         comments = (EditText) findViewById(R.id.editTextProductComments);
         rating = (RatingBar) findViewById(R.id.ratingBar);
-        thumbnail = (ImageView) findViewById(R.id.productThumbnail);
-        item = (TextView) findViewById(R.id.txtproduct);
+        thumbnail = (ImageView) findViewById(R.id.orderImage);
+        item = (TextView) findViewById(R.id.orderName);
         done = (Button) findViewById(R.id.button);
         delete = (Button) findViewById(R.id.button2);
 
@@ -106,7 +106,9 @@ public class EditReview extends AppCompatActivity {
                             dbf = FirebaseDatabase.getInstance().getReference().child("Reviews").child(reviewID);
                             dbf.removeValue(); //Delete
 
+                            //Pass item ID
                             Intent intent = new Intent(EditReview.this, AllReviews.class);
+                            intent.putExtra("ItemID", itemID);
                             startActivity(intent);
 
                         } catch (DatabaseException e) {
@@ -143,6 +145,7 @@ public class EditReview extends AppCompatActivity {
             dbf.child(id).setValue(review); //send model to database
             Toast.makeText(getApplicationContext(), "Review Added", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(EditReview.this, AllReviews.class);
+            intent.putExtra("ItemID", itemID);
             startActivity(intent);
         } catch (DatabaseException e) {
             e.printStackTrace();
