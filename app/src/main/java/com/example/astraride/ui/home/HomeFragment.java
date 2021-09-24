@@ -1,11 +1,13 @@
 package com.example.astraride.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,62 +15,77 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.astraride.R;
+import com.example.astraride.models.Item;
+import com.example.astraride.ui.products.AddNewItem;
+import com.example.astraride.ui.products.ItemRecyclerViewAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    FirebaseAuth auth;
+    DatabaseReference dbf;
+    Item item;
+    ArrayList<Item> itemList;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+        //Get data from database
+        dbf = FirebaseDatabase.getInstance().getReference().child("Items");
+        itemList = new ArrayList<>();
 
 
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        //Declare objects
-        final TextView textView = root.findViewById(R.id.text_home);
-        final Button btn = root.findViewById(R.id.buttonClick);
+        //Setup recyclerview
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.homeRecycler);
+        GridLayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2); //Use grid Laypur manager
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setHasFixedSize(true);
 
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+
+        dbf.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChanged(@Nullable String s) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChildren()) {
 
-                //Get userID
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    //Retrieve all data
+                    for (DataSnapshot ds : snapshot.getChildren()) {
 
-                if(user != null) {
-                    //Set functions
-                    textView.setText(user.getUid());
-                    Log.d("UserID", user.getUid());
-                }
-                else{
-                    textView.setText("Logout");
-                }
-                btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sendMessage();
+                        item = ds.getValue(Item.class);
+                        itemList.add(item);
+
                     }
-                });
+
+                    HomeViewAdapter adapter = new HomeViewAdapter(itemList);
+                    recyclerView.setAdapter(adapter);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("DBError", error.getMessage());
             }
         });
-        return root;
+
+        return view;
     }
 
-    public void sendMessage(){
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("message");
-//        myRef.setValue("Hello, World!");
-    }
 }
 

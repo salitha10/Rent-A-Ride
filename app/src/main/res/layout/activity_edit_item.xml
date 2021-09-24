@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.products.EditItem">
+
+    <ImageView
+        android:id="@+id/Item_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:clickable="true"
+        android:onClick="captureImage"
+        app:srcCompat="@drawable/ic_menu_camera"></ImageView>
+
+    <ScrollView
+        android:id="@+id/signup_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/editTextTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/ItemTitle"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+            <EditText
+                android:id="@+id/editTextBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Brand"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+            <EditText
+                android:id="@+id/editTextCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Category"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />/>
+
+            <EditText
+                android:id="@+id/editTextCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/PCapavity"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+            <EditText
+                android:id="@+id/editTextBodyColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Color"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+            <EditText
+                android:id="@+id/editTextTextLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Location"
+                android:inputType="textPostalAddress"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+
+            <EditText
+                android:id="@+id/editTextFee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/RentalFee"
+                android:inputType="numberDecimal"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+            <EditText
+                android:id="@+id/editTextDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Details"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#E91E63"
+                    android:onClick="Save"
+                    android:text="@string/Delete"></Button>
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#009688"
+                    android:onClick="Save"
+                    android:text="@string/Save"></Button>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

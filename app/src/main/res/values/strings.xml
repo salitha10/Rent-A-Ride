@@ -68,4 +68,6 @@
     <string name="CardDetails">Card Details</string>
     <string name="Rate">How was your experience?</string>
     <string name="rating">Rating</string>
+    <string name="Delete">Delete</string>
+    <string name="Save">Save</string>
 </resources>
