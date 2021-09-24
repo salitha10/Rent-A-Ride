@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -72,6 +73,12 @@ public class Checkout extends AppCompatActivity {
         card = findViewById(R.id.radioCard);
         totalCost = findViewById(R.id.TotalCost);
 
+        //Disable keyboard
+        pickupDate.setShowSoftInputOnFocus(false);
+        pickupDate.setFocusable(false);
+        returnDate.setShowSoftInputOnFocus(false);
+        returnDate.setFocusable(false);
+
         //Setup Date picker
         pickupDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +87,11 @@ public class Checkout extends AppCompatActivity {
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
                 int month = cldr.get(Calendar.MONTH);
                 int year = cldr.get(Calendar.YEAR);
+
                 // date picker dialog
                 picker = new DatePickerDialog(Checkout.this,
                         new DatePickerDialog.OnDateSetListener() {
+                            @RequiresApi(api = Build.VERSION_CODES.O)
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 pDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
@@ -93,10 +102,15 @@ public class Checkout extends AppCompatActivity {
                                 catch (Exception e){
                                     e.printStackTrace();
                                 }
-
                                 pickupDate.setText(pDate);
+
+                                if(!TextUtils.isEmpty(returnDate.getText())){
+                                    calculate_cost();
+                                }
+                                pickupDate.setText(rDate);
                             }
                         }, year, month, day);
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 picker.show();
             }
         });
@@ -120,10 +134,15 @@ public class Checkout extends AppCompatActivity {
                                     retDate = new SimpleDateFormat("dd/MM/yyyy").parse(rDate);
                                 }catch (Exception e){e.printStackTrace();}
 
-                                calculate_cost();
+                                //Calculate cost
+                                if(!TextUtils.isEmpty(pickupDate.getText())){
+                                    calculate_cost();
+                                }
                                 returnDate.setText(rDate);
                             }
                         }, year, month, day);
+
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 picker.show();
             }
         });
@@ -133,14 +152,21 @@ public class Checkout extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Check radio button click
-                if(cash.isChecked()){
-                    save();
+                if (validate()) {
+                    //Check radio button click
+                    if (cash.isChecked()) {
+                        save();
+                        Intent intent = new Intent(Checkout.this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        showPayment();
+                    }
                 }
-                else {
-                    showPayment();
+                else{
+                    Toast.makeText(Checkout.this, "Please fill details", Toast.LENGTH_SHORT).show();
                 }
             }
+
         });
 
     }
@@ -218,5 +244,40 @@ public class Checkout extends AppCompatActivity {
         totalPrice = Long.toString(hrs * Long.parseLong(rental)); //Calculate cost
         totalCost.setText("Total Cost: Rs." + totalPrice);
 
+    }
+
+    //Validation
+    public boolean validate(){
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String phonePattern = "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$";
+
+        if (TextUtils.isEmpty(name.getText())) {
+            name.setError("Please Enter a name!");
+        }
+        else if (TextUtils.isEmpty(email.getText())) {
+            email.setError("Please Enter a email!");
+        }
+        else if(!email.getText().toString().matches(emailPattern)){
+            email.setError("Please Enter valid email!");
+        }
+        else if (TextUtils.isEmpty(phoneNo.getText())) {
+            phoneNo.setError("Please Enter a phoneNo!");
+        }
+        else if(phoneNo.getText().toString().length() < 10 || phoneNo.getText().toString().length() > 10 ){
+            phoneNo.setError("Please Enter a valid phoneNo!");
+        }
+        else if (TextUtils.isEmpty(address.getText())) {
+            address.setError("Please Enter a address!");
+        }
+        else if (TextUtils.isEmpty(pickupDate.getText())) {
+            pickupDate.setError("Please Enter a pickup date!");
+        }
+        else if (TextUtils.isEmpty(returnDate.getText())) {
+            returnDate.setError("Please Enter a return date!");
+        }
+        else{
+            return true;
+        }
+        return false;
     }
 }

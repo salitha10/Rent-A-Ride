@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".ui.profile.EditProfile" >
+    tools:context=".ui.profile.EditProfile">
 
     <ImageView
         android:id="@+id/dp"
@@ -33,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:backgroundTint="@color/theme_green"
                 android:onClick="edit"
                 android:text="@string/Edit"
                 android:visibility="visible" />
@@ -122,6 +124,7 @@
                 android:id="@+id/btn_delete_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/btnRed"
                 android:onClick="deleteAccount"
                 android:text="@string/delete_account" />
 

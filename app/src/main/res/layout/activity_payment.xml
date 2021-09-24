@@ -54,7 +54,8 @@
             android:backgroundTint="@color/GreenMain"
             android:ems="10"
             android:hint="@string/card_number"
-            android:inputType="textShortMessage|number|textPersonName" />
+            android:inputType="number"
+            android:maxLines="10" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +73,8 @@
                 android:backgroundTint="@color/GreenMain"
                 android:ems="14"
                 android:hint="@string/expiry"
-                android:inputType="textPersonName" />
+                android:inputType="number|textPersonName"
+                android:maxLength="4" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName3"
@@ -82,7 +84,8 @@
                 android:backgroundTint="@color/GreenMain"
                 android:ems="10"
                 android:hint="@string/cvv"
-                android:inputType="textPassword" />
+                android:inputType="number|textPassword"
+                android:maxLength="4" />
         </LinearLayout>
 
         <View

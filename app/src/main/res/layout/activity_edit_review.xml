@@ -72,7 +72,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                android:theme="@style/RatingBar"/>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -129,7 +130,7 @@
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#E91E63"
+                    android:backgroundTint="@color/btnRed"
                     android:text="Delete"
                     android:textColor="#FFFFFF"
                     app:layout_constraintBottom_toBottomOf="parent"

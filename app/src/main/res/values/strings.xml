@@ -71,4 +71,6 @@
     <string name="Delete">Delete</string>
     <string name="Save">Save</string>
     <string name="Date">Date</string>
+    <string name="my_orders">My Orders</string>
+    <string name="Inventory">Inventory</string>
 </resources>

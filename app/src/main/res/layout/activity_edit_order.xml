@@ -101,7 +101,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
-                android:hint="Enter Date" />
+                android:hint="Enter Date"
+                android:inputType="date" />
 
             <TextView
                 android:id="@+id/date2"
@@ -115,7 +116,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
-                android:hint="Enter Date" />
+                android:hint="Enter Date"
+                android:inputType="date" />
 
             <TextView
                 android:id="@+id/TotalCost"
@@ -141,7 +143,8 @@
                 android:id="@+id/btnSave"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/GreenMain"
+                android:backgroundTint="@color/theme_green"
+                android:onClick="save"
                 android:text="Update" />
 
             <Button
@@ -149,6 +152,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/btnRed"
+                android:onClick="delete"
                 android:text="Cancel Order" />
 
         </LinearLayout>

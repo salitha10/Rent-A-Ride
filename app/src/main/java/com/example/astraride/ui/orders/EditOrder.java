@@ -10,25 +10,24 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.example.astraride.MainActivity;
 import com.example.astraride.R;
 import com.example.astraride.models.Order;
-import com.example.astraride.ui.products.EditItem;
-import com.example.astraride.ui.products.Inventory;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -52,6 +51,7 @@ public class EditOrder extends AppCompatActivity {
     Date pickDate, retDate;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +82,22 @@ public class EditOrder extends AppCompatActivity {
         address.setText(order.getAddress());
         pickupDate.setText(order.getPickupDate());
         returnDate.setText(order.getReturnDate());
+        totalCost.setText("Total cost: " + order.getCost());
 
+        rental = order.getCost();
+
+
+        try {
+            pickDate = new SimpleDateFormat("dd/MM/yyyy").parse(order.getPickupDate());
+            retDate = new SimpleDateFormat("dd/MM/yyyy").parse(order.getReturnDate());
+        }catch (Exception e){e.printStackTrace();}
+        calc_item_Cost();
+
+        //Disable keyboard
+        pickupDate.setShowSoftInputOnFocus(false);
+        pickupDate.setFocusable(false);
+        returnDate.setShowSoftInputOnFocus(false);
+        returnDate.setFocusable(false);
 
         //Setup Date picker
         pickupDate.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +122,11 @@ public class EditOrder extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                                 pickupDate.setText(pDate);
+
+                                //Calculate cost
+                                if(!TextUtils.isEmpty(returnDate.getText())){
+                                    calculate_cost();
+                                }
                             }
                         }, year, month, day);
                 picker.show();
@@ -132,8 +152,12 @@ public class EditOrder extends AppCompatActivity {
                                     retDate = new SimpleDateFormat("dd/MM/yyyy").parse(rDate);
                                 }catch (Exception e){e.printStackTrace();}
 
-                                calculate_cost();
                                 returnDate.setText(rDate);
+
+                                if(!TextUtils.isEmpty(pickupDate.getText())){
+                                    calculate_cost();
+                                }
+
                             }
                         }, year, month, day);
                 picker.show();
@@ -144,8 +168,13 @@ public class EditOrder extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                if (validate()) {
+                    save();
+                    Intent intent = new Intent(EditOrder.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(EditOrder.this, "Please fill details", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -204,11 +233,23 @@ public class EditOrder extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void calc_item_Cost(){
+
+        LocalDate date1 = pickDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate date2 = retDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        Period diff = Period.between(date1, date2);
+        int hrs = diff.getDays() * 24;
+
+        rental = Long.toString(Long.parseLong(rental) / hrs); //Calculate cost
+    }
+
     public void delete(View view){
         //Confirm delete
         AlertDialog.Builder alert = new AlertDialog.Builder(EditOrder.this);
         alert.setTitle("Delete entry");
-        alert.setMessage("Are you sure you want to delete?");
+        alert.setMessage("Are you sure you want to cancel?");
 
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -217,7 +258,7 @@ public class EditOrder extends AppCompatActivity {
                     dbf = FirebaseDatabase.getInstance().getReference().child("Orders").child(currentUser).child(orderID);
                     dbf.removeValue(); //Delete
 
-                    Intent intent = new Intent(EditOrder.this, Inventory.class);
+                    Intent intent = new Intent(EditOrder.this, MainActivity.class);
                     startActivity(intent);
 
                 } catch (DatabaseException e) {
@@ -232,5 +273,39 @@ public class EditOrder extends AppCompatActivity {
             }
         });
         alert.show();
+    }
+
+    //Validation
+    public boolean validate(){
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        if (TextUtils.isEmpty(name.getText())) {
+            name.setError("Please Enter a name!");
+        }
+        else if (TextUtils.isEmpty(email.getText())) {
+            email.setError("Please Enter a email!");
+        }
+        else if(!email.getText().toString().matches(emailPattern)){
+            email.setError("Please Enter valid email!");
+        }
+        else if (TextUtils.isEmpty(phoneNo.getText())) {
+            phoneNo.setError("Please Enter a phoneNo!");
+        }
+        else if(phoneNo.getText().toString().length() < 10 || phoneNo.getText().toString().length() > 10){
+            phoneNo.setError("Please Enter a valid phoneNo!");
+        }
+        else if (TextUtils.isEmpty(address.getText())) {
+            address.setError("Please Enter a address!");
+        }
+        else if (TextUtils.isEmpty(pickupDate.getText())) {
+            pickupDate.setError("Please Enter a pickup date!");
+        }
+        else if (TextUtils.isEmpty(returnDate.getText())) {
+            returnDate.setError("Please Enter a return date!");
+        }
+        else{
+            return true;
+        }
+        return false;
     }
 }

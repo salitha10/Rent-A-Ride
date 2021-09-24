@@ -10,8 +10,8 @@
     <ImageView
         android:id="@+id/dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+        android:layout_height="250dp"
+        app:srcCompat="@drawable/mobile_login_rafiki" />
 
     <TextView
         android:id="@+id/text"
@@ -19,7 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="clip_horizontal|center"
         android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif-black"
         android:text="Sign Up"
+        android:textColor="#3F51B5"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -100,6 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:backgroundTint="#03A9F4"
                 android:onClick="Save"
                 android:text="SIgn Up" />
 

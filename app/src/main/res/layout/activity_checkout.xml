@@ -139,7 +139,8 @@
                         android:id="@+id/radioCash"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cash on delivery" />
+                        android:text="Cash on delivery"
+                        android:checked="true"/>
 
                     <RadioButton
                         android:id="@+id/radioCard"

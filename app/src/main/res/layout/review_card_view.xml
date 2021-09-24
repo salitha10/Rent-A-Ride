@@ -9,7 +9,7 @@
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
-    app:cardMaxElevation="5dp"
+    app:cardMaxElevation="3dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
 

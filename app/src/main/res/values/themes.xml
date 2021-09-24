@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.AstraRide" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/theme_green</item>
+        <item name="colorPrimaryVariant">@color/GreenMain</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -17,6 +17,11 @@
     <style name="Theme.AstraRide.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/lightGrey</item>
+        <item name="colorControlActivated">@color/rating_star</item>
     </style>
 
     <style name="Theme.AstraRide.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

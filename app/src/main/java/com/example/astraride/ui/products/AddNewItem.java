@@ -62,19 +62,6 @@ public class AddNewItem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_item);
 
-//        sliderView = findViewById(R.id.slider);
-//
-//        List<String> urls = new ArrayList<>();
-//        urls.add("https://firebasestorage.googleapis.com/v0/b/astra-ride.appspot.com/o/Profile_images%2FQv33H6pzzYVGmuV2y8Lk00q8q073?alt=media&token=5bcb6db4-ef9d-41f2-b274-e401e8b360ea");
-//        urls.add("https://firebasestorage.googleapis.com/v0/b/astra-ride.appspot.com/o/Profile_images%2FQv33H6pzzYVGmuV2y8Lk00q8q073?alt=media&token=5bcb6db4-ef9d-41f2-b274-e401e8b360ea");
-//
-//        SliderAdapter sliderAdapter = new SliderAdapter(urls, getApplicationContext());
-//        Log.d("Count", Integer.toString(sliderAdapter.getCount()));
-//
-//        sliderView.setSliderAdapter(sliderAdapter);
-//        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
-//        sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
-
 
         //Initialize variables
         image = findViewById(R.id.Item_image);
@@ -88,7 +75,6 @@ public class AddNewItem extends AppCompatActivity {
         fee = findViewById(R.id.editTextFee);
         details = findViewById(R.id.editTextDetails);
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
 
     }

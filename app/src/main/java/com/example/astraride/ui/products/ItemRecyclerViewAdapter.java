@@ -51,7 +51,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         //Display values
         holder.itemName.setText(itemList.get(position).getTitle());
         holder.itemLocation.setText(itemList.get(position).getTitle());
-        holder.itemPrice.setText(itemList.get(position).getTitle());
+        holder.itemPrice.setText("Rs." + itemList.get(position).getTitle());
         Glide.with(holder.itemImage.getContext()).load(itemList.get(position).getItemImage()).into(holder.itemImage);
 
 

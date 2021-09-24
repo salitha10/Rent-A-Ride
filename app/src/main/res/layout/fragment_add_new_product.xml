@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <com.smarteist.autoimageslider.SliderView
-        android:id="@+id/imageSlider123"
+        android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:sliderAnimationDuration="600"
