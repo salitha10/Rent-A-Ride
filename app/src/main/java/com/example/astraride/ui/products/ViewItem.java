@@ -38,8 +38,7 @@ public class ViewItem extends AppCompatActivity {
 
         //Get item id
         Intent intent = getIntent();
-//        itemId = intent.getStringExtra("itemID");
-        itemId = "16323265505469v3FumdrqTamRAaMIP9iypetHFq1";
+        itemId = intent.getStringExtra("itemID");
 
         //Get current user
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();

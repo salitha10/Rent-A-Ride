@@ -1,5 +1,6 @@
 package com.example.astraride.ui.products;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.astraride.R;
 import com.example.astraride.models.Item;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -84,6 +86,15 @@ public class Inventory extends Fragment {
         dbf = FirebaseDatabase.getInstance().getReference().child("Items");
         itemList = new ArrayList<>();
 
+
+        View view = inflater.inflate(R.layout.fragment_inventory, container, false);
+
+        //Setup recyclerview
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+
         dbf.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -110,6 +121,9 @@ public class Inventory extends Fragment {
 
                     }
 
+                    ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(itemList);
+                    recyclerView.setAdapter(adapter);
+
                 }
             }
 
@@ -119,9 +133,14 @@ public class Inventory extends Fragment {
             }
         });
 
-
-        View view = inflater.inflate(R.layout.fragment_inventory, container, false);
-
+        FloatingActionButton fab = view.findViewById(R.id.addNew);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( getContext(), AddNewItem.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -130,11 +149,6 @@ public class Inventory extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
-        ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(itemList);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(adapter);
+
     }
 }

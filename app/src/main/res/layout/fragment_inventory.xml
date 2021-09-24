@@ -12,4 +12,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/recycler" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addNew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:src="@android:drawable/ic_input_add" />
+
 </FrameLayout>

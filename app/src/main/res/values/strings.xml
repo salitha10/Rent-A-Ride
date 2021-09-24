@@ -66,4 +66,6 @@
     <string name="pay">Pay</string>
     <string name="Card_Details">CardDetails</string>
     <string name="CardDetails">Card Details</string>
+    <string name="Rate">How was your experience?</string>
+    <string name="rating">Rating</string>
 </resources>

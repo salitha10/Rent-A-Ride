@@ -3,6 +3,8 @@ package com.example.astraride.ui.reviews;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class AddReview extends AppCompatActivity {
+public class EditReview extends AppCompatActivity {
 
 
     //Declare variables
@@ -35,25 +37,27 @@ public class AddReview extends AppCompatActivity {
     TextView item;
     DatabaseReference dbf;
     String currentUser;
-    Button done, cancel;
-    String itemID, reviewID; //intent
+    Button done, delete;
+    String itemID, reviewID, comment;
+    float ratingVal;
     Review review;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_review);
+        setContentView(R.layout.activity_edit_review);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         review = new Review();
 
         //Get values from intent
         Intent intent = getIntent();
-//        itemID = intent.getStringExtra("itemID");
-          itemID = "16323265505469v3FumdrqTamRAaMIP9iypetHFq1";
+        itemID = intent.getStringExtra("itemID");
+        reviewID = intent.getStringExtra("reviewID");
+        comment = intent.getStringExtra("comment");
+        ratingVal = intent.getFloatExtra("rating", 0);
 
-//        reviewID = intent.getStringExtra("reviewID");
 
         //Initialize components
         comments = (EditText) findViewById(R.id.editTextProductComments);
@@ -61,15 +65,20 @@ public class AddReview extends AppCompatActivity {
         thumbnail = (ImageView) findViewById(R.id.productThumbnail);
         item = (TextView) findViewById(R.id.txtproduct);
         done = (Button) findViewById(R.id.button);
-        cancel = (Button) findViewById(R.id.button2);
+        delete = (Button) findViewById(R.id.button2);
+
+        //Display data
+        rating.setRating(ratingVal);
+        comments.setText(comment);
+
 
         //Load data from database
         dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(itemID);
         dbf.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChildren()) {
-                    Glide.with(AddReview.this).load(snapshot.child("itemImage").getValue().toString()).into(thumbnail);
+                if (snapshot.hasChildren()) {
+                    Glide.with(EditReview.this).load(snapshot.child("itemImage").getValue().toString()).into(thumbnail);
                     item.setText(snapshot.child("title").getValue().toString());
                 }
             }
@@ -80,37 +89,62 @@ public class AddReview extends AppCompatActivity {
             }
         });
 
-        //Cancel button
-        cancel.setOnClickListener(new View.OnClickListener() {
+        //Delete button
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddReview.this, AllReviews.class);
-                startActivity(intent);
+
+                //Confirm delete
+                AlertDialog.Builder alert = new AlertDialog.Builder(EditReview.this);
+                alert.setTitle("Delete entry");
+                alert.setMessage("Are you sure you want to delete?");
+
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        try {
+                            dbf = FirebaseDatabase.getInstance().getReference().child("Reviews").child(reviewID);
+                            dbf.removeValue(); //Delete
+
+                            Intent intent = new Intent(EditReview.this, AllReviews.class);
+                            startActivity(intent);
+
+                        } catch (DatabaseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // close dialog
+                        dialog.cancel();
+                    }
+                });
+                alert.show();
             }
         });
     }
 
     //Save review
-    public void saveReview(View view){
+    public void saveReview(View view) {
 
         try {
-        //Save vales in model
-        review.setRating(rating.getRating());
-        review.setComments(comments.getText().toString());
-        review.setItemId(itemID);
-        review.setReviewerId(currentUser);
+            //Save vales in model
+            review.setRating(rating.getRating());
+            review.setComments(comments.getText().toString());
+            review.setItemId(itemID);
+            review.setReviewerId(currentUser);
 
-        //Save to db
+            //Save to db
 
             dbf = FirebaseDatabase.getInstance().getReference().child("Reviews");
             String id = dbf.push().getKey(); //Get key from database
             review.setReviewID(id);
             dbf.child(id).setValue(review); //send model to database
             Toast.makeText(getApplicationContext(), "Review Added", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AddReview.this, AllReviews.class);
+            Intent intent = new Intent(EditReview.this, AllReviews.class);
             startActivity(intent);
-        }
-        catch(DatabaseException e){
+        } catch (DatabaseException e) {
             e.printStackTrace();
         }
     }
