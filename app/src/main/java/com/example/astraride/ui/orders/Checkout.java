@@ -185,10 +185,12 @@ public class Checkout extends AppCompatActivity {
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 save();
                 bottomSheetDialog.cancel();
                 Intent intent = new Intent(Checkout.this, MainActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -278,6 +280,7 @@ public class Checkout extends AppCompatActivity {
         else{
             return true;
         }
+        Toast.makeText(getApplicationContext(), "Fields can't be empty", Toast.LENGTH_SHORT).show();
         return false;
     }
 }

@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_sheet_dialog_background"
     android:orientation="vertical">
-
-
+    
     <TextView
         android:id="@+id/textView16"
         android:layout_width="30dp"

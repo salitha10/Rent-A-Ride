@@ -19,9 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="clip_horizontal|center"
         android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Sign Up"
-        android:textColor="#3F51B5"
+        android:fontFamily="monospace"
+        android:text="@string/register"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:backgroundTint="#03A9F4"
+                android:backgroundTint="@color/ButtonGreen"
                 android:onClick="Save"
                 android:text="SIgn Up" />
 

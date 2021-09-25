@@ -10,15 +10,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.daimajia.slider.library.SliderLayout;
+import com.example.astraride.MainActivity;
 import com.example.astraride.R;
 import com.example.astraride.models.Item;
 import com.example.astraride.ui.reviews.AllReviews;
@@ -37,20 +42,24 @@ import com.google.firebase.storage.UploadTask;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
-public class EditItem extends AppCompatActivity {
+public class EditItem extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     SliderView sliderView;
     SliderLayout sliderLayout;
+    Spinner spinner;
     EditText title, brand, category, capacity, location, fee, details, color;
     Item item;
     Uri imageUri;
     ImageView image;
     Button save;
     DatabaseReference dbf;
-    String currentUser;
+    String currentUser, categorySelected;
+    String categories[] = {"Category", "SEDAN", "SUV", "COUPE", "SPORT", "STATION WAGON", "HATCHBACK",
+            "CONVERTIBLE"," MINI-VAN", "PICkUP TRUCK", "OTHER"};
     String itemID;
 
 
@@ -65,7 +74,7 @@ public class EditItem extends AppCompatActivity {
         save = findViewById(R.id.btnSave);
         title = findViewById(R.id.editTextTitle);
         brand = findViewById(R.id.editTextBrand);
-        category = findViewById(R.id.editTextCategory);
+        spinner = findViewById(R.id.category);
         capacity = findViewById(R.id.editTextCapacity);
         color = findViewById(R.id.editTextBodyColor);
         location = findViewById(R.id.editTextTextLocation);
@@ -81,7 +90,6 @@ public class EditItem extends AppCompatActivity {
         //Display data
         brand.setText(item.getBrand());
         title.setText(item.getTitle());
-        category.setText(item.getCategory());
         capacity.setText(item.getCapacity());
         color.setText(item.getColor());
         location.setText(item.getLocation());
@@ -89,6 +97,12 @@ public class EditItem extends AppCompatActivity {
         fee.setText(item.getRentalFee());
         Glide.with(getApplicationContext()).load(item.getItemImage()).into(image);
 
+        //Set spinner
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,categories);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(aa);
+        spinner.setOnItemSelectedListener(this);
+        spinner.setSelection(Arrays.asList(categories).indexOf(item.getCategory()));
 
     }
 
@@ -119,92 +133,141 @@ public class EditItem extends AppCompatActivity {
 
     public void Save(View view) {
 
-        //Get current time
-        String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
+        if(validate()) {
+            //Get current time
+            String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
-        //Loading
-        ProgressDialog pd = new ProgressDialog(EditItem.this);
-        pd.setMessage("Uploading...");
-        pd.show();
-        item = new Item();
+            //Loading
+            ProgressDialog pd = new ProgressDialog(EditItem.this);
+            pd.setMessage("Uploading...");
+            pd.show();
+            item = new Item();
 
-        //Get data
-        item.setTitle(title.getText().toString().trim());
-        item.setBrand(brand.getText().toString().trim());
-        item.setCategory(category.getText().toString().trim());
-        item.setCapacity(capacity.getText().toString().trim());
-        item.setLocation(location.getText().toString().trim());
-        item.setRentalFee(fee.getText().toString().trim());
-        item.setColor(color.getText().toString().trim());
-        item.setDetails(details.getText().toString().trim());
-        item.setDatePosted(date);
-        item.setPostedBy(currentUser.toString());
-        item.setItemID(itemID);
+            //Get data
+            item.setTitle(title.getText().toString().trim());
+            item.setBrand(brand.getText().toString().trim());
+            item.setCategory(categorySelected);
+            item.setCapacity(capacity.getText().toString().trim());
+            item.setLocation(location.getText().toString().trim());
+            item.setRentalFee(fee.getText().toString().trim());
+            item.setColor(color.getText().toString().trim());
+            item.setDetails(details.getText().toString().trim());
+            item.setDatePosted(date);
+            item.setPostedBy(currentUser.toString());
+            item.setItemID(itemID);
 
 
-        //Save to database
-        dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(itemID);
-        Intent intent = new Intent(this, AddNewItem.class);
+            //Save to database
+            dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(itemID);
+            Intent intent = new Intent(this, MainActivity.class);
 
-        if (imageUri != null) {
-            StorageReference stref = FirebaseStorage.getInstance().getReference().child("Item_images")
-                    .child(itemID);
+            if (imageUri != null) {
+                StorageReference stref = FirebaseStorage.getInstance().getReference().child("Item_images")
+                        .child(itemID);
 
-            stref.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    stref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            String url = uri.toString();
-                            item.setItemImage(url);
-                            Log.d("Image", url);
+                stref.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        stref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String url = uri.toString();
+                                item.setItemImage(url);
+                                Log.d("Image", url);
 
-                            //Save all data in database
-                            dbf.setValue(item);
-                            pd.cancel();
-                            Toast.makeText(EditItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
-                        }
-                    });
-                }
-            });
-        } else {
-            item.setItemImage("");
-            dbf.setValue(item);
-            pd.cancel();
-            Toast.makeText(EditItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
+                                //Save all data in database
+                                dbf.setValue(item);
+                                pd.cancel();
+                                Toast.makeText(EditItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                });
+            } else {
+                item.setItemImage("");
+                dbf.setValue(item);
+                pd.cancel();
+                Toast.makeText(EditItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
         }
     }
 
     public void delete(View view){
-        //Confirm delete
-        AlertDialog.Builder alert = new AlertDialog.Builder(EditItem.this);
-        alert.setTitle("Delete entry");
-        alert.setMessage("Are you sure you want to delete?");
+            //Confirm delete
+            AlertDialog.Builder alert = new AlertDialog.Builder(EditItem.this);
+            alert.setTitle("Delete entry");
+            alert.setMessage("Are you sure you want to delete?");
 
-        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // continue with delete
-                try {
-                    dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(itemID);
-                    dbf.removeValue(); //Delete
+            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // continue with delete
+                    try {
+                        dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(itemID);
+                        dbf.removeValue(); //Delete
 
-                    Intent intent = new Intent(EditItem.this, Inventory.class);
-                    startActivity(intent);
+                        Intent intent = new Intent(EditItem.this, Inventory.class);
+                        startActivity(intent);
 
-                } catch (DatabaseException e) {
-                    e.printStackTrace();
+                    } catch (DatabaseException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
-        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // close dialog
-                dialog.cancel();
-            }
-        });
-        alert.show();
+            });
+            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // close dialog
+                    dialog.cancel();
+                }
+            });
+            alert.show();
+        }
+
+
+    //Validation
+    public boolean validate(){
+
+        if (TextUtils.isEmpty(title.getText())) {
+            title.setError("Please Enter a title!");
+        }
+        else if (TextUtils.isEmpty(brand.getText())) {
+            brand.setError("Please Enter a brand!");
+        }
+        else if (TextUtils.isEmpty(capacity.getText())) {
+            capacity.setError("Please Enter capacity!");
+        }
+        else if(categorySelected == null){
+            Toast.makeText(getApplicationContext(), "Select category", Toast.LENGTH_SHORT).show();
+        }
+        else if (TextUtils.isEmpty(color.getText())) {
+            color.setError("Please Enter a color!");
+        }
+        else if (TextUtils.isEmpty(fee.getText())) {
+            fee.setError("Please Enter a rental fee!");
+        }
+        else if (TextUtils.isEmpty(details.getText())) {
+            details.setError("Please Enter details!");
+        }
+        else{
+            return true;
+        }
+        Toast.makeText(getApplicationContext(), "Fields can't be empty", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(position != 0) {
+            categorySelected = categories[position];
+        }
+        else{
+            categorySelected = null;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

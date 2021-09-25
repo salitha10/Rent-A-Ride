@@ -50,8 +50,8 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
         //Display values
         holder.itemName.setText(itemList.get(position).getTitle());
-        holder.itemLocation.setText(itemList.get(position).getTitle());
-        holder.itemPrice.setText("Rs." + itemList.get(position).getTitle());
+        holder.itemLocation.setText(itemList.get(position).getLocation());
+        holder.itemPrice.setText("Rs." + itemList.get(position).getRentalFee());
         Glide.with(holder.itemImage.getContext()).load(itemList.get(position).getItemImage()).into(holder.itemImage);
 
 
@@ -59,8 +59,8 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ViewItem.class);
-                intent.putExtra("itemID", itemList.get(position).getItemID());
+                Intent intent = new Intent(context, AdminItemView.class);
+                intent.putExtra("item", itemList.get(position).getItemID());
                 context.startActivity(intent);
             }
         });

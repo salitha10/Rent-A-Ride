@@ -1,5 +1,6 @@
 package com.example.astraride.ui.home;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,13 +51,17 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        ProgressDialog pd = new ProgressDialog(view.getContext());
+        pd.setMessage("Loading...");
+        pd.show();
+
 
         //Get data from database
         dbf = FirebaseDatabase.getInstance().getReference().child("Items");
         itemList = new ArrayList<>();
 
-
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         //Slider
         sliderView = view.findViewById(R.id.slider);
@@ -125,6 +130,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        pd.dismiss();
         return view;
     }
 

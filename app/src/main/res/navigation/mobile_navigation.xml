@@ -22,4 +22,11 @@
         android:name="com.example.astraride.ui.orders.MyOrders"
         android:label="@string/my_orders"
         tools:layout="@layout/activity_my_orders" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.example.astraride.ui.other.AboutUs"
+        android:label="@string/About"
+        tools:layout="@layout/fragment_about_us" />
+
 </navigation>

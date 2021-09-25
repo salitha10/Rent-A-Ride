@@ -92,26 +92,40 @@ public class AddReview extends AppCompatActivity {
     //Save review
     public void saveReview(View view){
 
-        try {
-        //Save vales in model
-        review.setRating(rating.getRating());
-        review.setComments(comments.getText().toString());
-        review.setItemId(ItemID);
-        review.setReviewerId(currentUser);
+        if(validate()) {
+            try {
+                //Save vales in model
+                review.setRating(rating.getRating());
+                review.setComments(comments.getText().toString());
+                review.setItemId(ItemID);
+                review.setReviewerId(currentUser);
 
-        //Save to db
+                //Save to db
+                dbf = FirebaseDatabase.getInstance().getReference().child("Reviews");
+                String id = dbf.push().getKey(); //Get key from database
+                review.setReviewID(id);
+                dbf.child(ItemID).child(id).setValue(review); //send model to database
+                Toast.makeText(getApplicationContext(), "Review Added", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddReview.this, AllReviews.class);
+                startActivity(intent);
 
-            dbf = FirebaseDatabase.getInstance().getReference().child("Reviews");
-            String id = dbf.push().getKey(); //Get key from database
-            review.setReviewID(id);
-            dbf.child(ItemID).child(id).setValue(review); //send model to database
-            Toast.makeText(getApplicationContext(), "Review Added", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AddReview.this, AllReviews.class);
-            startActivity(intent);
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            }
         }
-        catch(DatabaseException e){
-            e.printStackTrace();
+    }
+
+    public boolean validate(){
+        if(rating.getRating() == 0){
+            Toast.makeText(getApplicationContext(), "No rating given", Toast.LENGTH_SHORT).show();
         }
+        else if(comments.getText().toString().isEmpty()){
+            Toast.makeText(getApplicationContext(), "No comment given", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            return true;
+        }
+        return false;
     }
 
 }

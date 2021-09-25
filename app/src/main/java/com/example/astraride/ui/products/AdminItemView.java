@@ -39,7 +39,7 @@ public class AdminItemView extends AppCompatActivity {
 
         //Get item id
         Intent intent = getIntent();
-        itemId = intent.getStringExtra("itemID");
+        itemId = intent.getStringExtra("item");
 
         //Get current user
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -71,7 +71,7 @@ public class AdminItemView extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminItemView.this, Checkout.class);
+                Intent intent = new Intent(AdminItemView.this, EditItem.class);
                 intent.putExtra("item",item);
                 startActivity(intent);
             }

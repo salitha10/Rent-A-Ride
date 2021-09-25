@@ -30,7 +30,7 @@
             android:contentDescription="@string/app_name"
             android:padding="5dp"
             android:src="@drawable/common_google_signin_btn_icon_dark_normal"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_photo_black_48dp" />
 
 
     <LinearLayout

@@ -129,6 +129,7 @@ public class EditOrder extends AppCompatActivity {
                                 }
                             }
                         }, year, month, day);
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 picker.show();
             }
         });
@@ -160,6 +161,7 @@ public class EditOrder extends AppCompatActivity {
 
                             }
                         }, year, month, day);
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 picker.show();
             }
         });
@@ -306,6 +308,7 @@ public class EditOrder extends AppCompatActivity {
         else{
             return true;
         }
+        Toast.makeText(getApplicationContext(), "Fields can't be empty", Toast.LENGTH_SHORT).show();
         return false;
     }
 }

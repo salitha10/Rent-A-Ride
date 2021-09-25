@@ -21,7 +21,7 @@
     <item android:title="Contact us">
         <menu>
             <item
-                android:id="@+id/about_us"
+                android:id="@+id/nav_about"
                 android:icon="@drawable/ic_baseline_perm_contact_calendar_24"
                 android:title="About us">
             </item>

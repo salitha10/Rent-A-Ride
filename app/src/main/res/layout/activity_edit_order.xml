@@ -143,8 +143,8 @@
                 android:id="@+id/btnSave"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/theme_green"
-                android:onClick="save"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/ButtonGreen"
                 android:text="Update" />
 
             <Button

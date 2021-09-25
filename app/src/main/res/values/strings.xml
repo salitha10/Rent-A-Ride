@@ -73,4 +73,8 @@
     <string name="Date">Date</string>
     <string name="my_orders">My Orders</string>
     <string name="Inventory">Inventory</string>
+    <string name="hint_resource">hint</string>
+    <string name="register">Create Account</string>
+    <string name="About">About Us</string>
+    <string name="about_des">Astra Ride has a new face. After more than 20 years in business, we decided to give a fresher look to our brand and our services. With our fully renewed fleet of vehicles, we are ready to meet all expectations and requirements.</string>
 </resources>

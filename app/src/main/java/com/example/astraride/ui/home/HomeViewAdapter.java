@@ -18,6 +18,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.astraride.R;
 import com.example.astraride.models.Item;
 import com.example.astraride.ui.products.ViewItem;
@@ -31,6 +32,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.ViewHo
 
     ArrayList<Item> itemList = new ArrayList<>();
     Context context;
+
 
     public HomeViewAdapter(ArrayList<Item> itemList) {
         this.itemList = itemList;
@@ -48,6 +50,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewAdapter.ViewHolder holder, int position) {
+
 
         //Display values
         holder.itemName.setText(itemList.get(position).getTitle());

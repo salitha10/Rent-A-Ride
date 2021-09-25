@@ -118,7 +118,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginEnd="40dp"
             android:layout_toStartOf="@+id/button2"
-            android:backgroundTint="@color/GreenMain"
+            android:backgroundTint="@color/ButtonGreen"
             android:onClick="saveReview"
             android:text="Done"
             app:layout_constraintBottom_toBottomOf="parent"

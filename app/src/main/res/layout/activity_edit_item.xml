@@ -7,19 +7,31 @@
     android:orientation="vertical"
     tools:context=".ui.products.EditItem">
 
-    <ImageView
-        android:id="@+id/Item_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:clickable="true"
-        android:onClick="captureImage"
-        app:srcCompat="@drawable/thin_line_black_camera_logo_260nw_627479624"></ImageView>
-
     <ScrollView
         android:id="@+id/signup_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ItemCard"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_gravity="center"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
+        android:layout_margin="10dp"
+        app:cardMaxElevation="4dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="false">
+        <ImageView
+            android:id="@+id/Item_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_launcher_foreground"
+            android:onClick="captureImage" />
+    </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,15 +59,16 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp" />
 
-            <EditText
-                android:id="@+id/editTextCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/Category"
-                android:inputType="textPersonName"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp" />/>
+            <Spinner
+                android:id="@+id/category"
+                android:layout_height="50dp"
+                android:layout_width="160dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></Spinner>
+
 
             <EditText
                 android:id="@+id/editTextCapacity"
@@ -117,7 +130,7 @@
                     android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/GreenMain"
+                    android:backgroundTint="@color/ButtonGreen"
                     android:onClick="Save"
                     android:text="@string/Save"></Button>
 
