@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +27,7 @@ import com.example.astraride.models.Item;
 import com.example.astraride.ui.products.AddNewItem;
 import com.example.astraride.ui.products.ItemRecyclerViewAdapter;
 import com.example.astraride.ui.products.SliderAdapter;
+import com.example.astraride.ui.profile.Login;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,25 +49,25 @@ public class HomeFragment extends Fragment {
     Item item;
     ArrayList<Item> itemList;
     SliderView sliderView;
+    ProgressBar pb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ProgressDialog pd = new ProgressDialog(view.getContext());
-        pd.setMessage("Loading...");
-        pd.show();
+
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
         //Get data from database
         dbf = FirebaseDatabase.getInstance().getReference().child("Items");
         itemList = new ArrayList<>();
 
-
         //Slider
         sliderView = view.findViewById(R.id.slider);
+
+        pb = view.findViewById(R.id.HomePB);
 
         List<String> urls = new ArrayList<>();
         dbfs = FirebaseDatabase.getInstance().getReference().child("promos");
@@ -86,8 +89,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-
 
 
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
@@ -121,6 +122,8 @@ public class HomeFragment extends Fragment {
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
+
+                    pb.setVisibility(View.GONE);
                 }
             }
 
@@ -129,8 +132,6 @@ public class HomeFragment extends Fragment {
                 Log.e("DBError", error.getMessage());
             }
         });
-
-        pd.dismiss();
         return view;
     }
 

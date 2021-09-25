@@ -147,14 +147,19 @@ public class SignUp extends AppCompatActivity {
         }
     }
 
-
-
-
     //Validate email
     private boolean validateEmail(String emailstr) {
         final Pattern VALID_EMAIL_ADDRESS_REGEX =
                 Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailstr);
         return matcher.find();
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }

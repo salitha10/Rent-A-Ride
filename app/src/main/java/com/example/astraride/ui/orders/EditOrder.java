@@ -75,6 +75,7 @@ public class EditOrder extends AppCompatActivity {
         card = findViewById(R.id.radioCard);
         totalCost = findViewById(R.id.TotalCost);
 
+
         //Set values
         name.setText(order.getName());
         email.setText(order.getEmail());
@@ -83,14 +84,15 @@ public class EditOrder extends AppCompatActivity {
         pickupDate.setText(order.getPickupDate());
         returnDate.setText(order.getReturnDate());
         totalCost.setText("Total cost: " + order.getCost());
+        itemID = order.getItemID();
 
         rental = order.getCost();
-
 
         try {
             pickDate = new SimpleDateFormat("dd/MM/yyyy").parse(order.getPickupDate());
             retDate = new SimpleDateFormat("dd/MM/yyyy").parse(order.getReturnDate());
-        }catch (Exception e){e.printStackTrace();}
+        }   catch (Exception e){e.printStackTrace();}
+
         calc_item_Cost();
 
         //Disable keyboard
@@ -172,8 +174,7 @@ public class EditOrder extends AppCompatActivity {
             public void onClick(View v) {
                 if (validate()) {
                     save();
-                    Intent intent = new Intent(EditOrder.this, MainActivity.class);
-                    startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(EditOrder.this, "Please fill details", Toast.LENGTH_SHORT).show();
                 }
@@ -220,7 +221,7 @@ public class EditOrder extends AppCompatActivity {
         pd.cancel();
     }
 
-    //Convert string to data
+    //Calculate cost
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void calculate_cost() {
 
@@ -230,9 +231,10 @@ public class EditOrder extends AppCompatActivity {
         Period diff = Period.between(date1, date2);
         int hrs = diff.getDays() * 24;
 
+        if(hrs == 0){hrs = 1;};
+
         totalPrice = Long.toString(hrs * Long.parseLong(rental)); //Calculate cost
         totalCost.setText("Total Cost: Rs." + totalPrice);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -243,6 +245,8 @@ public class EditOrder extends AppCompatActivity {
 
         Period diff = Period.between(date1, date2);
         int hrs = diff.getDays() * 24;
+
+        if(hrs == 0){hrs = 1;};
 
         rental = Long.toString(Long.parseLong(rental) / hrs); //Calculate cost
     }
@@ -260,8 +264,7 @@ public class EditOrder extends AppCompatActivity {
                     dbf = FirebaseDatabase.getInstance().getReference().child("Orders").child(currentUser).child(orderID);
                     dbf.removeValue(); //Delete
 
-                    Intent intent = new Intent(EditOrder.this, MainActivity.class);
-                    startActivity(intent);
+                    finish();
 
                 } catch (DatabaseException e) {
                     e.printStackTrace();
@@ -310,5 +313,13 @@ public class EditOrder extends AppCompatActivity {
         }
         Toast.makeText(getApplicationContext(), "Fields can't be empty", Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }

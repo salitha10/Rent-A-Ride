@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.astraride.R;
 import com.example.astraride.models.Order;
@@ -37,6 +39,7 @@ public class MyOrders extends Fragment {
     ArrayList<Order> orderLst;
     String currentUser;
     Order od;
+    ProgressBar pb;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,8 +48,9 @@ public class MyOrders extends Fragment {
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         orderLst = new ArrayList<>();
 
-        dbf = FirebaseDatabase.getInstance().getReference().child("Orders").child("Goa7MGXYe9guQoE6m8cF0rXItq93");
+        dbf = FirebaseDatabase.getInstance().getReference().child("Orders").child(currentUser);
         rec = view.findViewById(R.id.myOrdersRecycle);
+        pb = view.findViewById(R.id.orderPB);
 
         //Add to recycleview
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -69,6 +73,12 @@ public class MyOrders extends Fragment {
                     OrderAdapter orderAdapter = new OrderAdapter(getContext(), orderLst);
                     rec.setAdapter(orderAdapter);
                     orderAdapter.notifyDataSetChanged();
+                    pb.setVisibility(View.GONE);
+
+                }
+                else{
+                        pb.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "No orders to show", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -80,5 +90,4 @@ public class MyOrders extends Fragment {
 
         return view;
     }
-
 }

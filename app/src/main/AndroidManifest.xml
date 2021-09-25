@@ -19,9 +19,9 @@
         <activity android:name=".ui.products.EditItem"
             android:label="Edit Item"/>
         <activity android:name=".ui.products.AdminItemView"
-            android:label="Edit View Item"/>
+            android:label="View Item"/>
         <activity android:name=".ui.reviews.EditReview"
-            android:label="Edit Edit Review"/>
+            android:label="Edit Review"/>
         <activity android:name=".ui.reviews.AddReview"
             android:label="Add Review"/>
         <activity android:name=".ui.orders.Checkout"

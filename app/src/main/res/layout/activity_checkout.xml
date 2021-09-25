@@ -128,7 +128,8 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
 
                 <RadioGroup
                     android:layout_width="wrap_content"
@@ -139,13 +140,14 @@
                         android:id="@+id/radioCash"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cash on delivery"
-                        android:checked="true"/>
+                        android:checked="false"
+                        android:text="Cash on delivery" />
 
                     <RadioButton
                         android:id="@+id/radioCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:text="Online payment" />
 
                 </RadioGroup>

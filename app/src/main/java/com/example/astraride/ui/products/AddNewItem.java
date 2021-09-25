@@ -120,7 +120,7 @@ public class AddNewItem extends AppCompatActivity implements AdapterView.OnItemS
 
         if (resultCode == Activity.RESULT_OK) {
             imageUri = data.getData();
-            Glide.with(AddNewItem.this).load(imageUri).into(image);
+            Glide.with(AddNewItem.this).load(imageUri).error(R.drawable.ic_launcher_foreground).into(image);
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
@@ -159,7 +159,6 @@ public class AddNewItem extends AppCompatActivity implements AdapterView.OnItemS
 
 
             //Save to database
-            Intent intent = new Intent(this, MainActivity.class);
 
             if (imageUri != null) {
                 StorageReference stref = FirebaseStorage.getInstance().getReference().child("Item_images")
@@ -179,7 +178,7 @@ public class AddNewItem extends AppCompatActivity implements AdapterView.OnItemS
                                 dbf.child(id).setValue(item);
                                 pd.cancel();
                                 Toast.makeText(AddNewItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
-                                startActivity(intent);
+                                finish();
                             }
                         });
                     }
@@ -189,7 +188,7 @@ public class AddNewItem extends AppCompatActivity implements AdapterView.OnItemS
                 dbf.child(id).setValue(item);
                 pd.cancel();
                 Toast.makeText(AddNewItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
-                startActivity(intent);
+                finish();
             }
         }
     }
@@ -224,4 +223,5 @@ public class AddNewItem extends AppCompatActivity implements AdapterView.OnItemS
         Toast.makeText(getApplicationContext(), "Fields can't be empty", Toast.LENGTH_SHORT).show();
         return false;
     }
+
 }

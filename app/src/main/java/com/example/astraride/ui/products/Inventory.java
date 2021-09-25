@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.astraride.R;
 import com.example.astraride.models.Item;
@@ -31,6 +33,7 @@ public class Inventory extends Fragment {
     DatabaseReference dbf;
     Item item;
     ArrayList<Item> itemList;
+    ProgressBar pb;
 
     public Inventory() {
         // Required empty public constructor
@@ -49,8 +52,9 @@ public class Inventory extends Fragment {
         dbf = FirebaseDatabase.getInstance().getReference().child("Items");
         itemList = new ArrayList<>();
 
-
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
+
+        pb = view.findViewById(R.id.invPB);
 
         //Setup recyclerview
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
@@ -87,6 +91,12 @@ public class Inventory extends Fragment {
                     ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(itemList);
                     recyclerView.setAdapter(adapter);
 
+                    pb.setVisibility(View.GONE);
+
+                }
+                else{
+                    pb.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "No items to show", Toast.LENGTH_LONG).show();
                 }
             }
 

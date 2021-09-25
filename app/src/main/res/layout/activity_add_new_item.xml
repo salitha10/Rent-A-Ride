@@ -5,28 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.products.AddNewItem">
-
+    tools:context=".ui.products.EditItem">
 
     <ScrollView
-        android:id="@+id/signup_scroll"
+        android:id="@+id/itm_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF">
-
-    <ImageView
-        android:id="@+id/Item_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:clickable="true"
-        android:onClick="captureImage"
-        app:srcCompat="@drawable/thin_line_black_camera_logo_260nw_627479624"></ImageView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ItemCard"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_gravity="center"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
+        android:layout_margin="10dp"
+        app:cardMaxElevation="4dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="false">
+
+        <ImageView
+            android:id="@+id/Item_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/thin_line_black_camera_logo_260nw_627479624"
+            android:onClick="captureImage" />
+    </androidx.cardview.widget.CardView>
 
             <EditText
                 android:id="@+id/editTextTitle"
@@ -48,15 +60,13 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp" />
 
-
             <Spinner
                 android:id="@+id/category"
                 android:layout_height="50dp"
                 android:layout_width="160dp"
-                android:layout_marginEnd="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></Spinner>
-
+                app:layout_constraintTop_toTopOf="parent">
+            </Spinner>
 
             <EditText
                 android:id="@+id/editTextCapacity"
@@ -64,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/PCapavity"
-                android:inputType="number"
+                android:inputType="textPersonName"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp" />
 
@@ -76,7 +86,7 @@
                 android:hint="@string/Color"
                 android:inputType="textPersonName"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp"/>
+                android:paddingBottom="20dp" />
 
             <EditText
                 android:id="@+id/editTextTextLocation"
@@ -94,10 +104,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:hint="@string/rental"
                 android:inputType="numberDecimal"
-                android:hint="@string/RentalFee"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp"/>
+                android:paddingBottom="20dp" />
 
             <EditText
                 android:id="@+id/editTextDetails"
@@ -109,16 +119,18 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp" />
 
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/ButtonGreen"
-                android:onClick="Save"
-                android:text="Save"></Button>
+
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/GreenMain"
+                    android:onClick="Save"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/Save"></Button>
 
         </LinearLayout>
-
     </ScrollView>
 
 

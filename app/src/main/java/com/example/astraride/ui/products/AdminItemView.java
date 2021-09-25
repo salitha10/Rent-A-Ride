@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 public class AdminItemView extends AppCompatActivity {
     TextView brand, color, title, capacity, rental, location, category, details, review;
     Button edit;
+    ProgressBar pb;
     ImageView img;
     String itemId, price;
     DatabaseReference dbf;
@@ -56,6 +58,7 @@ public class AdminItemView extends AppCompatActivity {
         review = (TextView) findViewById(R.id.ItemViewReviews);
         img = (ImageView) findViewById(R.id.imageViewItem);
         edit = (Button)findViewById(R.id.btnEdit);
+        pb = findViewById(R.id.adminItmPB);
 
 
         //Goto review page
@@ -63,6 +66,7 @@ public class AdminItemView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminItemView.this, AllReviews.class);
+                intent.putExtra("ItemID",itemId);
                 startActivity(intent);
             }
         });
@@ -93,11 +97,12 @@ public class AdminItemView extends AppCompatActivity {
                     color.setText(snapshot.child("color").getValue().toString());
                     capacity.setText(snapshot.child("capacity").getValue().toString());
                     details.setText(snapshot.child("details").getValue().toString());
-                    Glide.with(AdminItemView.this).load(snapshot.child("itemImage").getValue().toString()).into(img);
                     location.setText(snapshot.child("location").getValue().toString());
                     price = snapshot.child("rentalFee").getValue().toString();
                     rental.setText("Rs." + price + " per hour");
                     title.setText(snapshot.child("title").getValue().toString());
+                    Glide.with(AdminItemView.this).load(snapshot.child("itemImage").getValue().toString()).error(R.drawable.ic_launcher_foreground).into(img);
+                    pb.setVisibility(View.GONE);
                 }
             }
 
@@ -107,5 +112,13 @@ public class AdminItemView extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }

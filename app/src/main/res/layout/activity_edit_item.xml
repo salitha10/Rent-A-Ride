@@ -8,10 +8,16 @@
     tools:context=".ui.products.EditItem">
 
     <ScrollView
-        android:id="@+id/signup_scroll"
+        android:id="@+id/itmE_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/ItemCard"
@@ -29,15 +35,10 @@
             android:id="@+id/Item_image"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_launcher_foreground"
+            app:srcCompat="@drawable/thin_line_black_camera_logo_260nw_627479624"
             android:onClick="captureImage" />
     </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
 
             <EditText
                 android:id="@+id/editTextTitle"
@@ -63,12 +64,9 @@
                 android:id="@+id/category"
                 android:layout_height="50dp"
                 android:layout_width="160dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></Spinner>
-
+                app:layout_constraintTop_toTopOf="parent">
+            </Spinner>
 
             <EditText
                 android:id="@+id/editTextCapacity"
@@ -106,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/RentalFee"
+                android:hint="@string/rental"
                 android:inputType="numberDecimal"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp" />
@@ -124,13 +122,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
 
                 <Button
                     android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/ButtonGreen"
+                    android:backgroundTint="@color/GreenMain"
                     android:onClick="Save"
                     android:text="@string/Save"></Button>
 

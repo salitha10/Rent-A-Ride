@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.astraride.R;
-import com.example.astraride.ui.profile.EditProfile;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.List;
@@ -39,7 +38,6 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(Holder viewHolder, int position) {
-
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +45,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.Holder> {
             }
         });
 
-        Glide.with(context).load(images.get(position)).into(viewHolder.imageView);
+        Glide.with(context).load(images.get(position)).error(R.drawable.ic_launcher_foreground).into(viewHolder.imageView);
 
     }
 

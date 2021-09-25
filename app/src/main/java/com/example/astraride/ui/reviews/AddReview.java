@@ -10,11 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.astraride.MainActivity;
 import com.example.astraride.R;
 import com.example.astraride.models.Review;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +40,7 @@ public class AddReview extends AppCompatActivity {
     Button done, cancel;
     String ItemID, reviewID; //intent
     Review review;
+    ProgressBar pb;
 
 
     @Override
@@ -61,6 +64,7 @@ public class AddReview extends AppCompatActivity {
         item = (TextView) findViewById(R.id.orderName);
         done = (Button) findViewById(R.id.button);
         cancel = (Button) findViewById(R.id.button2);
+        pb = findViewById(R.id.revPB);
 
         //Load data from database
         dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(ItemID);
@@ -68,8 +72,10 @@ public class AddReview extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.hasChildren()) {
-                    Glide.with(AddReview.this).load(snapshot.child("itemImage").getValue().toString()).into(thumbnail);
+                    Glide.with(AddReview.this).load(snapshot.child("itemImage").getValue().toString())
+                            .error(R.drawable.ic_launcher_foreground).into(thumbnail);
                     item.setText(snapshot.child("title").getValue().toString());
+                    pb.setVisibility(View.GONE);
                 }
             }
 
@@ -83,8 +89,7 @@ public class AddReview extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddReview.this, AllReviews.class);
-                startActivity(intent);
+                finish();
             }
         });
     }
@@ -106,8 +111,8 @@ public class AddReview extends AppCompatActivity {
                 review.setReviewID(id);
                 dbf.child(ItemID).child(id).setValue(review); //send model to database
                 Toast.makeText(getApplicationContext(), "Review Added", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(AddReview.this, AllReviews.class);
-                startActivity(intent);
+
+               finish();
 
             } catch (DatabaseException e) {
                 e.printStackTrace();

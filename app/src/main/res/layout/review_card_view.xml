@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/idTVName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginTop="10dp"
@@ -90,6 +90,7 @@
             android:layout_marginEnd="41dp"
             android:layout_toEndOf="@id/idIVImage"
             android:drawablePadding="2dp"
+            android:paddingBottom="10dp"
             android:text="Comment"
             android:textSize="14sp"
             android:transformPivotX="0dp"

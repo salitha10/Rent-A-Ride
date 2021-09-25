@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_Inventory"
         android:name="com.example.astraride.ui.products.Inventory"
-        android:label="@string/menu_gallery"
+        android:label="@string/Inventory"
         tools:layout="@layout/fragment_inventory" />
 
     <fragment

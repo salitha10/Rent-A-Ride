@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.astraride.R;
 import com.example.astraride.models.Review;
@@ -26,6 +28,7 @@ import java.util.List;
 public class AllReviews extends AppCompatActivity {
 
     FloatingActionButton btn;
+    ProgressBar pb;
     DatabaseReference dbf, dbfu;
     RecyclerView rec;
     String itemID;
@@ -42,12 +45,14 @@ public class AllReviews extends AppCompatActivity {
         //Ge data from intent
         Intent i = getIntent();
         itemID = i.getStringExtra("ItemID");
+
         Log.d("IItm", itemID);
 
         rvList = new ArrayList<Review>();
 
         dbf = FirebaseDatabase.getInstance().getReference().child("Reviews").child(itemID);
         rec = findViewById(R.id.allReviewsRecycle);
+        pb = findViewById(R.id.progressBar);
 
         //Add to recycleview
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -65,13 +70,18 @@ public class AllReviews extends AppCompatActivity {
 
                             Review rv = snap.getValue(Review.class);
                             rvList.add(rv);
-                        Log.e("rev", rv.getReviewerId());
+                            Log.e("rev", rv.getReviewID());
 
                     }
 
                     ReviewAdapter ra = new ReviewAdapter(getApplicationContext(), rvList);
                     rec.setAdapter(ra);
                     ra.notifyDataSetChanged();
+                    pb.setVisibility(View.GONE);
+                }
+                else{
+                    pb.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), "No reviews to show", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -81,9 +91,7 @@ public class AllReviews extends AppCompatActivity {
             }
         });
 
-
         Log.d("rv", Integer.toString(rvList.size()));
-
 
         btn = (FloatingActionButton) findViewById(R.id.btnAddReview);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +101,16 @@ public class AllReviews extends AppCompatActivity {
                 Intent intent = new Intent(AllReviews.this, AddReview.class);
                 intent.putExtra("itemId",itemID);
                 startActivity(intent);
+
             }
         });
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }

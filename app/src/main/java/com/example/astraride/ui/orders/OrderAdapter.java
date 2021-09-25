@@ -71,7 +71,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.Viewholder>{
                 if (snapshot.hasChildren()) {
 
                     //Get item image
-                    Glide.with(context).load(snapshot.child("itemImage").getValue()).into(holder.orderImg);
+                    Glide.with(context).load(snapshot.child("itemImage").getValue()).error(R.drawable.ic_launcher_foreground).into(holder.orderImg);
 
                     //Add onclick listener
                     holder.card.setOnClickListener(new View.OnClickListener() {
@@ -117,5 +117,4 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.Viewholder>{
             card = itemView.findViewById(R.id.orderCard);
         }
     }
-
 }

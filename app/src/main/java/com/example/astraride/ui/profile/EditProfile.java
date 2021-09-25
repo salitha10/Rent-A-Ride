@@ -102,7 +102,8 @@ public class EditProfile extends AppCompatActivity {
                     phoneNo.setText(snapshot.child("phoneNo").getValue().toString());
                     address.setText(snapshot.child("address").getValue().toString());
                     user.setUserImage(snapshot.child("userImage").getValue().toString());
-                    Glide.with(EditProfile.this).load(user.getUserImage()).circleCrop().into(dp);
+                    Glide.with(EditProfile.this).load(user.getUserImage()).circleCrop().error(R.drawable.ic_launcher_foreground)
+                            .into(dp);
 
                     user.setPassword(snapshot.child("password").getValue().toString());
                     user.setUserType(snapshot.child("userType").getValue().toString());
@@ -191,6 +192,7 @@ public class EditProfile extends AppCompatActivity {
                                                         pd.cancel();
                                                         reverseEdit();
                                                         Toast.makeText(EditProfile.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                                                        finish();
                                                     }
                                                 });
                                             }
@@ -201,6 +203,7 @@ public class EditProfile extends AppCompatActivity {
                                         pd.cancel();
                                         reverseEdit();
                                         Toast.makeText(EditProfile.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                                        finish();
                                     }
 
                                 }
@@ -230,9 +233,6 @@ public class EditProfile extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-//        Log.d("URI data", data.getStringExtra("dat").toString());
-//        Toast.makeText(EditProfile.this,  requestCode, Toast.LENGTH_SHORT).show();
 
         //requestCode ==  2404
         if(resultCode == Activity.RESULT_OK){

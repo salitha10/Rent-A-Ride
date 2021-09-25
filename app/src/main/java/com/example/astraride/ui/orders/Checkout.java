@@ -42,6 +42,7 @@ public class Checkout extends AppCompatActivity {
     TextView totalCost;
     Button checkout;
     String rental, currentUser, itemID, pDate, rDate, totalPrice;
+
     Order order;
     RadioButton cash, card;
     DatabaseReference dbf;
@@ -107,7 +108,7 @@ public class Checkout extends AppCompatActivity {
                                 if(!TextUtils.isEmpty(returnDate.getText())){
                                     calculate_cost();
                                 }
-                                pickupDate.setText(rDate);
+                                pickupDate.setText(pDate);
                             }
                         }, year, month, day);
                 picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
@@ -233,7 +234,7 @@ public class Checkout extends AppCompatActivity {
         pd.cancel();
     }
 
-    //Convert string to data
+    //Calculate cost
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void calculate_cost() {
 
@@ -242,6 +243,8 @@ public class Checkout extends AppCompatActivity {
 
         Period diff = Period.between(date1, date2);
         int hrs = diff.getDays() * 24;
+
+        if(hrs == 0){hrs = 1;};
 
         totalPrice = Long.toString(hrs * Long.parseLong(rental)); //Calculate cost
         totalCost.setText("Total Cost: Rs." + totalPrice);
@@ -282,5 +285,13 @@ public class Checkout extends AppCompatActivity {
         }
         Toast.makeText(getApplicationContext(), "Fields can't be empty", Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }

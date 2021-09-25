@@ -77,4 +77,5 @@
     <string name="register">Create Account</string>
     <string name="About">About Us</string>
     <string name="about_des">Astra Ride has a new face. After more than 20 years in business, we decided to give a fresher look to our brand and our services. With our fully renewed fleet of vehicles, we are ready to meet all expectations and requirements.</string>
+    <string name="rental">Rental fee per hour</string>
 </resources>

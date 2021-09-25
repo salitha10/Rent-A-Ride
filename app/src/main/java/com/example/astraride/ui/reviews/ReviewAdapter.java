@@ -68,28 +68,27 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Viewholder
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
                     User user = snapshot.getValue(User.class);
-                    Glide.with(context).load(user.getUserImage()).circleCrop().into(holder.reviewImg);
+                    Glide.with(context).load(user.getUserImage()).circleCrop()
+                            .error(R.drawable.ic_launcher_foreground).into(holder.reviewImg);
                     holder.reviewNameTV.setText(user.getName());
 
                     //Add onclick listener
-                    holder.card.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(user.getUserId().equals(curretUser)){
-
+                    if (user.getUserId().equals(curretUser)) {
+                        holder.card.setCardBackgroundColor(0xBFBABA);
+                        holder.card.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
                                 //Start edit review
                                 Intent intent = new Intent(context, EditReview.class);
-
                                 intent.putExtra("reviewID", reviewModelArrayList.get(position).getReviewID());
                                 intent.putExtra("rating", reviewModelArrayList.get(position).getRating());
-//                                Log.d("Rating",  reviewModelArrayList.get(position).getRating());
                                 intent.putExtra("itemID", reviewModelArrayList.get(position).getItemId());
                                 intent.putExtra("comment", reviewModelArrayList.get(position).getComments());
 
                                 context.startActivity(intent);
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
 

@@ -56,6 +56,7 @@ public class EditItem extends AppCompatActivity implements AdapterView.OnItemSel
     Uri imageUri;
     ImageView image;
     Button save;
+    String img;
     DatabaseReference dbf;
     String currentUser, categorySelected;
     String categories[] = {"Category", "SEDAN", "SUV", "COUPE", "SPORT", "STATION WAGON", "HATCHBACK",
@@ -95,7 +96,12 @@ public class EditItem extends AppCompatActivity implements AdapterView.OnItemSel
         location.setText(item.getLocation());
         details.setText(item.getDetails());
         fee.setText(item.getRentalFee());
-        Glide.with(getApplicationContext()).load(item.getItemImage()).into(image);
+        Glide.with(getApplicationContext()).load(item.getItemImage()).error(R.drawable.thin_line_black_camera_logo_260nw_627479624)
+                .into(image);
+
+        img = item.getItemImage();
+        Log.d("img", img);
+
 
         //Set spinner
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,categories);
@@ -120,7 +126,7 @@ public class EditItem extends AppCompatActivity implements AdapterView.OnItemSel
 
         if (resultCode == Activity.RESULT_OK) {
             imageUri = data.getData();
-            Glide.with(EditItem.this).load(imageUri).into(image);
+            Glide.with(EditItem.this).load(imageUri).error(R.drawable.ic_launcher_foreground).into(image);
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
@@ -141,6 +147,7 @@ public class EditItem extends AppCompatActivity implements AdapterView.OnItemSel
             ProgressDialog pd = new ProgressDialog(EditItem.this);
             pd.setMessage("Uploading...");
             pd.show();
+
             item = new Item();
 
             //Get data
@@ -162,6 +169,7 @@ public class EditItem extends AppCompatActivity implements AdapterView.OnItemSel
             Intent intent = new Intent(this, MainActivity.class);
 
             if (imageUri != null) {
+
                 StorageReference stref = FirebaseStorage.getInstance().getReference().child("Item_images")
                         .child(itemID);
 
@@ -179,13 +187,13 @@ public class EditItem extends AppCompatActivity implements AdapterView.OnItemSel
                                 dbf.setValue(item);
                                 pd.cancel();
                                 Toast.makeText(EditItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
-                                startActivity(intent);
+                                finish();
                             }
                         });
                     }
                 });
             } else {
-                item.setItemImage("");
+                item.setItemImage(img);
                 dbf.setValue(item);
                 pd.cancel();
                 Toast.makeText(EditItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
@@ -207,8 +215,7 @@ public class EditItem extends AppCompatActivity implements AdapterView.OnItemSel
                         dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(itemID);
                         dbf.removeValue(); //Delete
 
-                        Intent intent = new Intent(EditItem.this, Inventory.class);
-                        startActivity(intent);
+                        finish();
 
                     } catch (DatabaseException e) {
                         e.printStackTrace();
@@ -270,4 +277,5 @@ public class EditItem extends AppCompatActivity implements AdapterView.OnItemSel
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 }

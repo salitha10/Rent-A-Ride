@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class EditReview extends AppCompatActivity {
     String itemID, reviewID, comment;
     float ratingVal;
     Review review;
+    ProgressBar pb;
 
 
     @Override
@@ -55,6 +57,7 @@ public class EditReview extends AppCompatActivity {
         Intent intent = getIntent();
         itemID = intent.getStringExtra("itemID");
         reviewID = intent.getStringExtra("reviewID");
+        Log.d("revvv", reviewID);
         comment = intent.getStringExtra("comment");
         ratingVal = intent.getFloatExtra("rating", 0);
 
@@ -66,6 +69,7 @@ public class EditReview extends AppCompatActivity {
         item = (TextView) findViewById(R.id.orderName);
         done = (Button) findViewById(R.id.button);
         delete = (Button) findViewById(R.id.button2);
+        pb = findViewById(R.id.edRevPB);
 
         //Display data
         rating.setRating(ratingVal);
@@ -78,8 +82,10 @@ public class EditReview extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
-                    Glide.with(EditReview.this).load(snapshot.child("itemImage").getValue().toString()).into(thumbnail);
+                    Glide.with(EditReview.this).load(snapshot.child("itemImage").getValue().toString())
+                            .error(R.drawable.ic_launcher_foreground).into(thumbnail);
                     item.setText(snapshot.child("title").getValue().toString());
+                    pb.setVisibility(View.GONE);
                 }
             }
 
@@ -103,13 +109,12 @@ public class EditReview extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
                         try {
-                            dbf = FirebaseDatabase.getInstance().getReference().child("Reviews").child(reviewID);
+                            dbf = FirebaseDatabase.getInstance().getReference().child("Reviews").child(itemID).child(reviewID);
+                            Log.d("itm", itemID);
                             dbf.removeValue(); //Delete
+                            Toast.makeText(getApplicationContext(), "Review Deleted", Toast.LENGTH_SHORT).show();
 
-                            //Pass item ID
-                            Intent intent = new Intent(EditReview.this, AllReviews.class);
-                            intent.putExtra("ItemID", itemID);
-                            startActivity(intent);
+                            finish();
 
                         } catch (DatabaseException e) {
                             e.printStackTrace();
@@ -131,22 +136,21 @@ public class EditReview extends AppCompatActivity {
     public void saveReview(View view) {
 
         try {
+
             //Save vales in model
             review.setRating(rating.getRating());
             review.setComments(comments.getText().toString());
             review.setItemId(itemID);
             review.setReviewerId(currentUser);
+            review.setReviewID(reviewID);
 
             //Save to db
+            dbf = FirebaseDatabase.getInstance().getReference().child("Reviews").child(itemID).child(reviewID);
+            dbf.setValue(review); //send model to database
 
-            dbf = FirebaseDatabase.getInstance().getReference().child("Reviews");
-            String id = dbf.push().getKey(); //Get key from database
-            review.setReviewID(id);
-            dbf.child(id).setValue(review); //send model to database
             Toast.makeText(getApplicationContext(), "Review Added", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(EditReview.this, AllReviews.class);
-            intent.putExtra("ItemID", itemID);
-            startActivity(intent);
+            finish();
+
         } catch (DatabaseException e) {
             e.printStackTrace();
         }

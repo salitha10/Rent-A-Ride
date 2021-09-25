@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +31,7 @@ public class ViewItem extends AppCompatActivity {
     String itemId, price;
     DatabaseReference dbf;
     String currentUser;
+    ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class ViewItem extends AppCompatActivity {
         review = (TextView) findViewById(R.id.ItemViewReviews);
         img = (ImageView) findViewById(R.id.imageViewItem);
         chekOut = (Button) findViewById(R.id.btnPay);
+        pb = findViewById(R.id.itmPB);
 
 
         //Goto review page
@@ -90,11 +93,13 @@ public class ViewItem extends AppCompatActivity {
                     color.setText(snapshot.child("color").getValue().toString());
                     capacity.setText(snapshot.child("capacity").getValue().toString());
                     details.setText(snapshot.child("details").getValue().toString());
-                    Glide.with(ViewItem.this).load(snapshot.child("itemImage").getValue().toString()).into(img);
                     location.setText(snapshot.child("location").getValue().toString());
                     price = snapshot.child("rentalFee").getValue().toString();
                     rental.setText("Rs." + price + " per hour");
                     title.setText(snapshot.child("title").getValue().toString());
+                    Glide.with(ViewItem.this).load(snapshot.child("itemImage").getValue().toString())
+                            .error(R.drawable.ic_launcher_foreground).into(img);
+                    pb.setVisibility(View.GONE);
                 }
             }
 
@@ -104,5 +109,13 @@ public class ViewItem extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }
