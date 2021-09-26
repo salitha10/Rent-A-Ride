@@ -9,11 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.astraride.R;
-import com.example.astraride.ui.payment.Checkout;
+import com.example.astraride.ui.orders.Checkout;
 import com.example.astraride.ui.reviews.AllReviews;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,7 @@ public class ViewItem extends AppCompatActivity {
     String itemId, price;
     DatabaseReference dbf;
     String currentUser;
+    ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,7 @@ public class ViewItem extends AppCompatActivity {
 
         //Get item id
         Intent intent = getIntent();
-//        itemId = intent.getStringExtra("itemID");
-        itemId = "16323265505469v3FumdrqTamRAaMIP9iypetHFq1";
+        itemId = intent.getStringExtra("itemID");
 
         //Get current user
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -56,6 +57,7 @@ public class ViewItem extends AppCompatActivity {
         review = (TextView) findViewById(R.id.ItemViewReviews);
         img = (ImageView) findViewById(R.id.imageViewItem);
         chekOut = (Button) findViewById(R.id.btnPay);
+        pb = findViewById(R.id.itmPB);
 
 
         //Goto review page
@@ -63,6 +65,7 @@ public class ViewItem extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ViewItem.this, AllReviews.class);
+                intent.putExtra("ItemID",itemId);
                 startActivity(intent);
             }
         });
@@ -90,11 +93,13 @@ public class ViewItem extends AppCompatActivity {
                     color.setText(snapshot.child("color").getValue().toString());
                     capacity.setText(snapshot.child("capacity").getValue().toString());
                     details.setText(snapshot.child("details").getValue().toString());
-                    Glide.with(ViewItem.this).load(snapshot.child("itemImage").getValue().toString()).into(img);
                     location.setText(snapshot.child("location").getValue().toString());
                     price = snapshot.child("rentalFee").getValue().toString();
                     rental.setText("Rs." + price + " per hour");
                     title.setText(snapshot.child("title").getValue().toString());
+                    Glide.with(ViewItem.this).load(snapshot.child("itemImage").getValue().toString())
+                            .error(R.drawable.ic_launcher_foreground).into(img);
+                    pb.setVisibility(View.GONE);
                 }
             }
 
@@ -104,5 +109,13 @@ public class ViewItem extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }

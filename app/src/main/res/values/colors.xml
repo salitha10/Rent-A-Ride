@@ -10,7 +10,7 @@
     <color name="theme_green">#1BB55C</color>
     <color name="card_ash1">#F0F0F0</color>
     <color name="card_ash2">#F5F5F5</color>
-    <color name="card_ash3">#E0E0E0</color>
+    <color name="card_ash3">#BFBABA</color>
     <color name="chat_bar">#9BEFC7</color>
     <color name="purple">#6200EE</color>
     <color name="rating_star">#f9a602</color>
@@ -20,7 +20,8 @@
     <color name="lightGrayBtn">#F0F0F0</color>
     <color name="btnBlue">#1BB5AC</color>
     <color name="btnRed">#EE0000</color>
-    <color name="vetorGreen">#88E9AF</color>
+    <color name="vetorGreen">#075E54</color>
+    <color name="ButtonGreen">#25D366</color>
     <color name="txtLightGrey">#808080</color>
     <color name="lightBlack">#6B000000</color>
     <color name="View_line">#A6A6A6</color>

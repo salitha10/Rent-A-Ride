@@ -154,4 +154,12 @@ public class Login extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 }

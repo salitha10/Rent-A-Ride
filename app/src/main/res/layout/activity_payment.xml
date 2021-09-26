@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_sheet_dialog_background"
     android:orientation="vertical">
-
-
+    
     <TextView
         android:id="@+id/textView16"
         android:layout_width="30dp"
@@ -45,7 +44,7 @@
         android:backgroundTint="@color/lightGreenBtn">
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/edtCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -54,7 +53,9 @@
             android:backgroundTint="@color/GreenMain"
             android:ems="10"
             android:hint="@string/card_number"
-            android:inputType="textShortMessage|number|textPersonName" />
+            android:inputType="number"
+            android:maxLength="12"
+            android:maxLines="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,24 +66,26 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/edtExp"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="60dp"
                 android:backgroundTint="@color/GreenMain"
                 android:ems="14"
                 android:hint="@string/expiry"
-                android:inputType="textPersonName" />
+                android:inputType="number|textPersonName"
+                android:maxLength="4" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName3"
+                android:id="@+id/edtCVV"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:backgroundTint="@color/GreenMain"
                 android:ems="10"
                 android:hint="@string/cvv"
-                android:inputType="textPassword" />
+                android:inputType="number|textPassword"
+                android:maxLength="4" />
         </LinearLayout>
 
         <View
@@ -145,7 +148,7 @@
     </LinearLayout>
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkTerm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

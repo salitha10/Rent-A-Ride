@@ -17,33 +17,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-            <ImageView
-                android:id="@+id/imageViewItem"
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/ItemCard"
+                android:layout_width="380dp"
                 android:layout_height="250dp"
-                app:srcCompat="@drawable/placeholder" />
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                app:cardMaxElevation="4dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="false">
+
+                <ImageView
+                    android:id="@+id/imageViewItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_launcher_foreground" />
+
+                <ProgressBar
+                    android:id="@+id/itmPB"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical" />
+            </androidx.cardview.widget.CardView>
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="2dp"
                 android:background="?android:attr/listDivider" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/ItemViewTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
                     android:text="@string/ItemTitle"
+
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -52,9 +74,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Location"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="5dp"/>
 
             <TextView
                 android:id="@+id/ItemViewPrice"
@@ -62,14 +84,18 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Price"
                 android:textColor="#4CAF50"
+                android:layout_marginTop="5dp"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"/>
 
             <View
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_marginTop="2dp"
+                android:background="?android:attr/listDivider"
+                android:padding="5dp" />
 
             <TextView
                 android:id="@+id/ItemViewSpecs"
@@ -77,12 +103,15 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/Specs"
+                android:layout_marginTop="10dp"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"/>
 
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -194,8 +223,10 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/Details"
+                android:layout_marginTop="10dp"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp" />
 
             <TextView
                 android:id="@+id/ItemViewDetails"
@@ -205,7 +236,8 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="Details"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"/>
 
             <TextView
                 android:id="@+id/ItemViewReviews"
@@ -216,11 +248,11 @@
                 android:paddingBottom="10dp"
                 android:text="@string/SeeReviews"
                 android:textColor="#2196F3"
-                android:textSize="18sp" />
-
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"/>
         </LinearLayout>
-
     </ScrollView>
+
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -232,9 +264,8 @@
             android:id="@+id/btnPay"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/ButtonGreen"
             android:text="@string/Rent" />
-
     </RelativeLayout>
-
 
 </FrameLayout>

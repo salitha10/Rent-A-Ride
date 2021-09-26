@@ -1,5 +1,6 @@
 package com.example.astraride.ui.products;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.astraride.R;
 import com.example.astraride.models.Item;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,57 +27,21 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Inventory#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Inventory extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class Inventory extends Fragment {
 
     DatabaseReference dbf;
     Item item;
     ArrayList<Item> itemList;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    ProgressBar pb;
 
     public Inventory() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Inventory.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Inventory newInstance(String param1, String param2) {
-        Inventory fragment = new Inventory();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-
-        }
-    }
+        super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,6 +51,16 @@ public class Inventory extends Fragment {
         //Get data from database
         dbf = FirebaseDatabase.getInstance().getReference().child("Items");
         itemList = new ArrayList<>();
+
+        View view = inflater.inflate(R.layout.fragment_inventory, container, false);
+
+        pb = view.findViewById(R.id.invPB);
+
+        //Setup recyclerview
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(mLayoutManager);
 
         dbf.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -110,6 +88,15 @@ public class Inventory extends Fragment {
 
                     }
 
+                    ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(itemList);
+                    recyclerView.setAdapter(adapter);
+
+                    pb.setVisibility(View.GONE);
+
+                }
+                else{
+                    pb.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "No items to show", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -119,22 +106,16 @@ public class Inventory extends Fragment {
             }
         });
 
-
-        View view = inflater.inflate(R.layout.fragment_inventory, container, false);
-
+        FloatingActionButton fab = view.findViewById(R.id.addNew);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( getContext(), AddNewItem.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
-        ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(itemList);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(adapter);
-    }
 }

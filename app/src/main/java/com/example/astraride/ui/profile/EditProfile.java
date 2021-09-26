@@ -5,8 +5,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.opengl.Visibility;
@@ -24,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.astraride.MainActivity;
 import com.example.astraride.R;
 import com.example.astraride.models.User;
+import com.example.astraride.ui.products.EditItem;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,7 +48,7 @@ import java.util.ArrayList;
 public class EditProfile extends AppCompatActivity {
 
     EditText name, email, phoneNo, password, address, confirm_password;
-    Button btnUpdate, btnUpload, btnEdit, btnDelete;
+    Button btnUpdate, btnUpload, btnEdit, btnDelete, cancel;
     ImageView dp;
     DatabaseReference dbf;
     User user;
@@ -69,6 +72,7 @@ public class EditProfile extends AppCompatActivity {
         btnUpload = findViewById(R.id.btn_upload);
         btnEdit = findViewById(R.id.btn_edit);
         btnDelete = findViewById(R.id.btn_delete_account);
+        cancel = findViewById(R.id.btnCancel);
         dp = findViewById(R.id.dp);
 
 
@@ -86,11 +90,11 @@ public class EditProfile extends AppCompatActivity {
         Log.d("profileID", id);
 
         //Get data from database
-        dbf.addListenerForSingleValueEvent(new ValueEventListener(){
+        dbf.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                if (snapshot.hasChildren()){
+                if (snapshot.hasChildren()) {
 
                     //Initialize user object
                     user = new User();
@@ -102,7 +106,8 @@ public class EditProfile extends AppCompatActivity {
                     phoneNo.setText(snapshot.child("phoneNo").getValue().toString());
                     address.setText(snapshot.child("address").getValue().toString());
                     user.setUserImage(snapshot.child("userImage").getValue().toString());
-                    Glide.with(EditProfile.this).load(user.getUserImage()).circleCrop().into(dp);
+                    Glide.with(EditProfile.this).load(user.getUserImage()).circleCrop().error(R.drawable.ic_launcher_foreground)
+                            .into(dp);
 
                     user.setPassword(snapshot.child("password").getValue().toString());
                     user.setUserType(snapshot.child("userType").getValue().toString());
@@ -115,9 +120,7 @@ public class EditProfile extends AppCompatActivity {
 
                     pd.cancel();
 
-                }
-
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_SHORT).show();
                 }
 
@@ -141,7 +144,7 @@ public class EditProfile extends AppCompatActivity {
                     check = false;
                     Toast.makeText(getApplicationContext(), "Name Text Field is empty", Toast.LENGTH_SHORT).show();
                     name.requestFocus();
-                }else if (TextUtils.isEmpty(phoneNo.getText().toString())) {
+                } else if (TextUtils.isEmpty(phoneNo.getText().toString())) {
                     check = false;
                     Toast.makeText(getApplicationContext(), "Phone No. Text Field is empty", Toast.LENGTH_SHORT).show();
                     email.requestFocus();
@@ -149,7 +152,7 @@ public class EditProfile extends AppCompatActivity {
                     check = false;
                     Toast.makeText(getApplicationContext(), "Invalid Phone No.", Toast.LENGTH_SHORT).show();
                     email.requestFocus();
-                }else if (TextUtils.isEmpty(address.getText().toString())) {
+                } else if (TextUtils.isEmpty(address.getText().toString())) {
                     check = false;
                     Toast.makeText(getApplicationContext(), "Address Text Field is empty", Toast.LENGTH_SHORT).show();
                     email.requestFocus();
@@ -191,6 +194,7 @@ public class EditProfile extends AppCompatActivity {
                                                         pd.cancel();
                                                         reverseEdit();
                                                         Toast.makeText(EditProfile.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                                                        finish();
                                                     }
                                                 });
                                             }
@@ -201,6 +205,7 @@ public class EditProfile extends AppCompatActivity {
                                         pd.cancel();
                                         reverseEdit();
                                         Toast.makeText(EditProfile.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                                        finish();
                                     }
 
                                 }
@@ -216,14 +221,20 @@ public class EditProfile extends AppCompatActivity {
             }
         });
 
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reverseEdit();
+            }
+        });
 
     }
 
-    public void captureImage(View view){
+    public void captureImage(View view) {
         ImagePicker.with(EditProfile.this)
-                .crop()	    			//Crop image(Optional), Check Customization for more option
-                .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .crop()                    //Crop image(Optional), Check Customization for more option
+                .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                 .start();
     }
 
@@ -231,16 +242,12 @@ public class EditProfile extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//        Log.d("URI data", data.getStringExtra("dat").toString());
-//        Toast.makeText(EditProfile.this,  requestCode, Toast.LENGTH_SHORT).show();
-
         //requestCode ==  2404
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
             imageUri = data.getData();
             Glide.with(EditProfile.this).load(imageUri).circleCrop().into(dp);
 
-        }
-        else if (resultCode == ImagePicker.RESULT_ERROR) {
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
@@ -249,28 +256,31 @@ public class EditProfile extends AppCompatActivity {
     }
 
     //Get image extension
-    private String getFileExtension(Uri uri){
+    private String getFileExtension(Uri uri) {
         ContentResolver cr = getContentResolver();
         MimeTypeMap mp = MimeTypeMap.getSingleton();
         return mp.getExtensionFromMimeType(cr.getType(uri));
     }
 
-    public void edit(View view){
+    public void edit(View view) {
         btnEdit.setVisibility(View.GONE);
         btnUpload.setVisibility(View.VISIBLE);
         btnDelete.setVisibility(View.GONE);
         btnUpdate.setVisibility(View.VISIBLE);
+        cancel.setVisibility(View.VISIBLE);
 
         name.setFocusableInTouchMode(true);
         address.setFocusableInTouchMode(true);
         phoneNo.setFocusableInTouchMode(true);
+
     }
 
-    public void reverseEdit(){
+    public void reverseEdit() {
         btnEdit.setVisibility(View.VISIBLE);
         btnUpload.setVisibility(View.GONE);
         btnDelete.setVisibility(View.VISIBLE);
         btnUpdate.setVisibility(View.GONE);
+        cancel.setVisibility(View.GONE);
 
         name.setFocusable(false);
         phoneNo.setFocusable(false);
@@ -278,22 +288,43 @@ public class EditProfile extends AppCompatActivity {
     }
 
     //Delete account
-    public void deleteAccount(View view){
+    public void deleteAccount(View view) {
 
-        dbf.removeValue();
-        currentUser.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(EditProfile.this, "Account deleted", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EditProfile.this, "Account can't be deleted", Toast.LENGTH_SHORT).show();
+        //Confirm delete
+        AlertDialog.Builder alert = new AlertDialog.Builder(EditProfile.this);
+        alert.setTitle("Delete entry");
+        alert.setMessage("Are you sure you want to delete?");
+
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // continue with delete
+                try {
+
+                    dbf.removeValue();
+                    currentUser.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(EditProfile.this, "Account deleted", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), Login.class);
+                            startActivity(intent);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(EditProfile.this, "Account can't be deleted", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // close dialog
+                dialog.cancel();
+            }
+        });
+        alert.show();
     }
-
 }

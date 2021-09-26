@@ -2,34 +2,51 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.astraride">
 
+    //Permission
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AstraRide">
-        <activity android:name=".ui.reviews.AddReview"></activity>
-        <activity android:name=".ui.payment.Checkout"></activity>
-        <activity android:name=".ui.reviews.AllReviews" />
-        <activity android:name=".ui.products.ViewItem">
+        <activity android:name=".ui.orders.EditOrder"
+            android:label="Edit Order"></activity>
+        <activity android:name=".ui.products.EditItem"
+            android:label="Edit Item"/>
+        <activity android:name=".ui.products.AdminItemView"
+            android:label="View Item"/>
+        <activity android:name=".ui.reviews.EditReview"
+            android:label="Edit Review"/>
+        <activity android:name=".ui.reviews.AddReview"
+            android:label="Add Review"/>
+        <activity android:name=".ui.orders.Checkout"
+            android:label="Checkout"/>
+        <activity android:name=".ui.reviews.AllReviews"
+            android:label="All Reviews"/>
+        <activity android:name=".ui.products.ViewItem"
+            android:label="View Item"/>
+        <activity android:name=".ui.products.AddNewItem"
+            android:label="Add New Item">
+        </activity>
+        <activity android:name=".ui.profile.EditProfile"
+            android:label="Edit Profile"/>
+        <activity android:name=".ui.profile.Login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.products.AddNewItem" />
-        <activity android:name=".ui.profile.EditProfile" />
-        <activity android:name=".ui.profile.Login" />
-        <activity android:name=".ui.profile.SignUp" />
+        <activity android:name=".ui.profile.SignUp"
+            android:label="Sign Up"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.AstraRide.NoActionBar" />
+            android:theme="@style/Theme.AstraRide.NoActionBar">
+        </activity>
     </application>
-
 </manifest>
