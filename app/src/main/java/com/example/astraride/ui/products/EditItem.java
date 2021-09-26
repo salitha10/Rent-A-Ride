@@ -26,6 +26,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.example.astraride.MainActivity;
 import com.example.astraride.R;
 import com.example.astraride.models.Item;
+import com.example.astraride.ui.orders.EditOrder;
 import com.example.astraride.ui.reviews.AllReviews;
 import com.example.astraride.ui.reviews.EditReview;
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -197,7 +198,7 @@ public class EditItem extends AppCompatActivity implements AdapterView.OnItemSel
                 dbf.setValue(item);
                 pd.cancel();
                 Toast.makeText(EditItem.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
-                startActivity(intent);
+               finish();
             }
         }
     }
@@ -215,7 +216,8 @@ public class EditItem extends AppCompatActivity implements AdapterView.OnItemSel
                         dbf = FirebaseDatabase.getInstance().getReference().child("Items").child(itemID);
                         dbf.removeValue(); //Delete
 
-                        finish();
+                        Intent intent = new Intent(EditItem.this, MainActivity.class);
+                        startActivity(intent);
 
                     } catch (DatabaseException e) {
                         e.printStackTrace();

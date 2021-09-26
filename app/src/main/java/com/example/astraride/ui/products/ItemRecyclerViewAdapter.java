@@ -53,7 +53,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         holder.itemLocation.setText(itemList.get(position).getLocation());
         holder.itemPrice.setText("Rs." + itemList.get(position).getRentalFee());
         Glide.with(holder.itemImage.getContext()).load(itemList.get(position).getItemImage())
-                .error(R.drawable.thin_line_black_camera_logo_260nw_627479624).into(holder.itemImage);
+                .error(R.drawable.ic_launcher_foreground).into(holder.itemImage);
 
 
         //Handle clicks

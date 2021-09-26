@@ -87,6 +87,7 @@ public class EditOrder extends AppCompatActivity {
         itemID = order.getItemID();
 
         rental = order.getCost();
+        totalPrice = order.getCost();
 
         try {
             pickDate = new SimpleDateFormat("dd/MM/yyyy").parse(order.getPickupDate());
@@ -231,7 +232,7 @@ public class EditOrder extends AppCompatActivity {
         Period diff = Period.between(date1, date2);
         int hrs = diff.getDays() * 24;
 
-        if(hrs == 0){hrs = 1;};
+        if(hrs == 0){hrs = 24;};
 
         totalPrice = Long.toString(hrs * Long.parseLong(rental)); //Calculate cost
         totalCost.setText("Total Cost: Rs." + totalPrice);
@@ -246,7 +247,7 @@ public class EditOrder extends AppCompatActivity {
         Period diff = Period.between(date1, date2);
         int hrs = diff.getDays() * 24;
 
-        if(hrs == 0){hrs = 1;};
+        if(hrs == 0){hrs = 24;};
 
         rental = Long.toString(Long.parseLong(rental) / hrs); //Calculate cost
     }

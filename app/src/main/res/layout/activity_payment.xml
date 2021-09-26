@@ -44,7 +44,7 @@
         android:backgroundTint="@color/lightGreenBtn">
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/edtCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -66,7 +66,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/edtExp"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="60dp"
@@ -77,7 +77,7 @@
                 android:maxLength="4" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName3"
+                android:id="@+id/edtCVV"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -148,7 +148,7 @@
     </LinearLayout>
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkTerm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

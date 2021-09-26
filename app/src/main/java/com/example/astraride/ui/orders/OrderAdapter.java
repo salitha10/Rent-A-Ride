@@ -58,11 +58,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.Viewholder>{
         //User loged in
         curretUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Order order = orderList.get(position);
-        holder.orderNameTV.setText(order.getName());
         String date[] = order.getOrderDate().split(" "); //DB date contains time
         holder.orderDateTV.setText(date[0]);
 
-        //Get user data
+        //Get item data
         dbfu = FirebaseDatabase.getInstance().getReference().child("Items").child(order.getItemID());
 
         dbfu.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -72,6 +71,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.Viewholder>{
 
                     //Get item image
                     Glide.with(context).load(snapshot.child("itemImage").getValue()).error(R.drawable.ic_launcher_foreground).into(holder.orderImg);
+                    holder.orderNameTV.setText(snapshot.child("title").getValue().toString());
 
                     //Add onclick listener
                     holder.card.setOnClickListener(new View.OnClickListener() {

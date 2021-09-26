@@ -104,6 +104,9 @@ public class AdminItemView extends AppCompatActivity {
                     Glide.with(AdminItemView.this).load(snapshot.child("itemImage").getValue().toString()).error(R.drawable.ic_launcher_foreground).into(img);
                     pb.setVisibility(View.GONE);
                 }
+                else{
+                    finish();
+                }
             }
 
             @Override

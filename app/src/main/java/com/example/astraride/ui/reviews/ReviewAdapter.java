@@ -35,7 +35,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Viewholder
     DatabaseReference dbfu;
     String curretUser;
 
-
     // Constructor
     public ReviewAdapter(Context context, ArrayList<Review> reviewModelArrayList) {
         this.context = context;

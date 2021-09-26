@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -177,20 +178,33 @@ public class Checkout extends AppCompatActivity {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.activity_payment);
 
+        //Init
         LinearLayout layout = bottomSheetDialog.findViewById(R.id.bottom_sheet_payment);
         Button pay = bottomSheetDialog.findViewById(R.id.btnPay);
         TextView amount = bottomSheetDialog.findViewById(R.id.payment_amount);
         amount.setText("LKR." + totalPrice);
+
+        EditText card = bottomSheetDialog.findViewById(R.id.edtCard);
+        EditText cvv = bottomSheetDialog.findViewById(R.id.edtCVV);
+        EditText exp = bottomSheetDialog.findViewById(R.id.edtExp);
+        CheckBox term = bottomSheetDialog.findViewById(R.id.checkTerm);
+
 
         //When pay button is clicked
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                save();
-                bottomSheetDialog.cancel();
-                Intent intent = new Intent(Checkout.this, MainActivity.class);
-                startActivity(intent);
+                //Validate
+                if(card.getText().toString() == null || cvv.getText().toString()  == null||
+                        exp.getText().toString() == null || !term.isChecked()){
+                    Toast.makeText(getApplicationContext(), "Fill all the fields", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    save();
+                    bottomSheetDialog.cancel();
+                    finish();
+                }
 
             }
         });
@@ -226,7 +240,7 @@ public class Checkout extends AppCompatActivity {
         //Save to database
         try {
             dbf.child(id).setValue(order);
-            Toast.makeText(Checkout.this, "Order Placed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Order confirmed", Toast.LENGTH_SHORT).show();
         }
         catch(DatabaseException error){
             Log.e("DBError", error.getMessage());
@@ -244,7 +258,7 @@ public class Checkout extends AppCompatActivity {
         Period diff = Period.between(date1, date2);
         int hrs = diff.getDays() * 24;
 
-        if(hrs == 0){hrs = 1;};
+        if(hrs == 0){hrs = 24;};
 
         totalPrice = Long.toString(hrs * Long.parseLong(rental)); //Calculate cost
         totalCost.setText("Total Cost: Rs." + totalPrice);
